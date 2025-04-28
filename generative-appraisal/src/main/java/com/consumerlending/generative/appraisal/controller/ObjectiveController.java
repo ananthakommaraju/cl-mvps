@@ -1,8 +1,9 @@
 package com.consumerlending.generative.appraisal.controller;
 
 import com.consumerlending.generative.appraisal.domain.Objective;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.consumerlending.generative.appraisal.service.ObjectiveService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/objectives")
 public class ObjectiveController {
 
+    private final ObjectiveService objectiveService;
+
     @Autowired
-    private ObjectiveService objectiveService;
+    public ObjectiveController(ObjectiveService objectiveService) {
+        this.objectiveService = objectiveService;
+    }
 
     @GetMapping
     public List<Objective> findAll() {

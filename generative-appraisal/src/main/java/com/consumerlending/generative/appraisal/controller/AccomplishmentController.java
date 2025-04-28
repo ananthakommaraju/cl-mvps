@@ -3,7 +3,6 @@ package com.consumerlending.generative.appraisal.controller;
 import com.consumerlending.generative.appraisal.domain.Accomplishment;
 import com.consumerlending.generative.appraisal.service.AccomplishmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,15 +13,19 @@ import java.util.List;
 @RequestMapping("/api/accomplishments")
 public class AccomplishmentController {
 
-    @Autowired
-    private AccomplishmentService accomplishmentService;
+    private final AccomplishmentService accomplishmentService;
 
-    @GetMapping
+    @Autowired
+    public AccomplishmentController(AccomplishmentService accomplishmentService) {
+        this.accomplishmentService = accomplishmentService;
+    }
+
+    @org.springframework.web.bind.annotation.GetMapping
     public List<Accomplishment> findAll() {
         return accomplishmentService.findAll();
     }
 
-    @GetMapping("/byObjective/{objectiveId}")
+    @org.springframework.web.bind.annotation.GetMapping("/byObjective/{objectiveId}")
     public List<Accomplishment> findByObjective(@PathVariable Long objectiveId) {
         return accomplishmentService.findByObjective(objectiveId);
     }

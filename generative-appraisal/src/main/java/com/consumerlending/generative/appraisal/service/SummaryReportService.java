@@ -1,11 +1,11 @@
 package com.consumerlending.generative.appraisal.service;
 
 import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import com.consumerlending.generative.appraisal.domain.Employee;
 import com.consumerlending.generative.appraisal.domain.SummaryReport;
 import com.consumerlending.generative.appraisal.repository.SummaryReportRepository;
@@ -13,13 +13,16 @@ import com.consumerlending.generative.appraisal.repository.SummaryReportReposito
 @Service
 public class SummaryReportService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private SummaryReportRepository summaryReportRepository;
+    private final EmployeeRepository employeeRepository;
+    private final SummaryReportRepository summaryReportRepository;
 
+    @Autowired
+    public SummaryReportService(EmployeeRepository employeeRepository,
+                                SummaryReportRepository summaryReportRepository) {
+        this.employeeRepository = employeeRepository;
+        this.summaryReportRepository = summaryReportRepository;
+    }
+    
     public List<SummaryReport> findAll() {
         return summaryReportRepository.findAll();
     }

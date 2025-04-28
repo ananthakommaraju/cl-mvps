@@ -6,21 +6,24 @@ import com.consumerlending.generative.appraisal.repository.ObjectiveRepository;
 import com.consumerlending.generative.appraisal.repository.GoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class ObjectiveService {
 
-    @Autowired
     private ObjectiveRepository objectiveRepository;
-    @Autowired
+
     private GoalRepository goalRepository;
+
+    @Autowired
+    public ObjectiveService(ObjectiveRepository objectiveRepository, GoalRepository goalRepository) {
+        this.objectiveRepository = objectiveRepository;
+        this.goalRepository = goalRepository;
+    }
 
     public List<Objective> findAll() {
         return objectiveRepository.findAll();
     }
-
     public List<Objective> findByGoal(Long goalId) {
         Goal goal = goalRepository.findById(goalId).orElse(null);
         if (goal == null)

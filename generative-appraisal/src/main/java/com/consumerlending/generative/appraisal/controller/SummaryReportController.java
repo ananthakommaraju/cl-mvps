@@ -1,8 +1,9 @@
 package com.consumerlending.generative.appraisal.controller;
 
 import com.consumerlending.generative.appraisal.domain.SummaryReport;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.consumerlending.generative.appraisal.service.SummaryReportService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/summaryreports")
 public class SummaryReportController {
 
+    private final SummaryReportService summaryReportService;
+
     @Autowired
-    private SummaryReportService summaryReportService;
+    public SummaryReportController(SummaryReportService summaryReportService) {
+        this.summaryReportService = summaryReportService;
+    }
 
     @GetMapping
     public List<SummaryReport> getAllSummaryReports() {
