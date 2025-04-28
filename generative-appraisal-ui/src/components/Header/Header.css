@@ -1,0 +1,20 @@
+/* Header.css */
+.header {
+  background-color: #003a70; /* Lloyds dark blue */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header-logo {
+  height: 50px; /* Adjust as needed */
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 20px;
+}
