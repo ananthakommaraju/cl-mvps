@@ -1,0 +1,29 @@
+package com.example.appraisal.controller;
+
+import com.example.appraisal.domain.Appraisal;
+import com.example.appraisal.service.AppraisalService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/appraisals")
+public class AppraisalController {
+
+    @Autowired
+    private AppraisalService appraisalService;
+
+    @GetMapping
+    public List<Appraisal> getAllAppraisals() {
+        return appraisalService.findAll();
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public List<Appraisal> getAppraisalsByEmployee(@PathVariable Long employeeId) {
+        return appraisalService.findByEmployee(employeeId);
+    }
+}
