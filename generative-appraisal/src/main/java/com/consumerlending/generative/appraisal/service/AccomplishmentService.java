@@ -29,4 +29,16 @@ public class AccomplishmentService {
         Objective objective = objectiveRepository.findById(objectiveId).orElse(null); if(objective == null) return List.of();
         return accomplishmentRepository.findByObjective(objective);
     }
+    public Accomplishment createAccomplishment(Accomplishment accomplishment) {
+        return accomplishmentRepository.save(accomplishment);
+    }
+
+    public Accomplishment updateAccomplishment(Long id, Accomplishment accomplishment) {
+        accomplishment.setId(id);
+        return accomplishmentRepository.save(accomplishment);
+    }
+
+    public void deleteAccomplishment(Long id) {
+        accomplishmentRepository.deleteById(id);
+    }
 }

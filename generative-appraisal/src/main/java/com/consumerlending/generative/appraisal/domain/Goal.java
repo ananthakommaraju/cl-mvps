@@ -18,6 +18,8 @@ public class Goal {
     private Long id;
 
     private String description;
+    
+    private String summary;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")

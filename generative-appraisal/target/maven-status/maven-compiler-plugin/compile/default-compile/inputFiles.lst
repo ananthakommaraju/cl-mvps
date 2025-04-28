@@ -1,4 +1,5 @@
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/service/GoalService.java
+/home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/repository/AppraisalSummaryRepository.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/Employee.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/repository/SummaryReportRepository.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/SummaryReport.java
@@ -7,11 +8,13 @@
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/AppraisalApplication.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/repository/ObjectiveRepository.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/service/AccomplishmentService.java
+/home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/AppraisalSummary.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/service/EmployeeService.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/repository/AppraisalRepository.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/service/ObjectiveService.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/Goal.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/Accomplishment.java
+/home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/service/GeminiService.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/repository/EmployeeRepository.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/controller/ObjectiveController.java
 /home/user/cl-mvps/generative-appraisal/src/main/java/com/consumerlending/generative/appraisal/domain/Appraisal.java

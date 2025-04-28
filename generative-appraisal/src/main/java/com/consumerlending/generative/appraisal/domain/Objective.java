@@ -19,6 +19,8 @@ public class Objective {
 
     private String description;
 
+    private String summary;
+
     @ManyToOne
     @JoinColumn(name = "goal_id")
     private Goal goal;

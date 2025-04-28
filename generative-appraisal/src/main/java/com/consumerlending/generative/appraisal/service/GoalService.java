@@ -32,4 +32,16 @@ public class GoalService {
         }
         return List.of();
     }
+
+    public Goal create(Goal goal) {
+        return goalRepository.save(goal);
+    }
+
+    public Goal update(Goal goal) {
+        return goalRepository.save(goal);
+    }
+
+    public void delete(Long id) {
+        goalRepository.deleteById(id);
+    }
 }

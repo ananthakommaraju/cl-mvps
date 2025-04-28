@@ -30,4 +30,15 @@ public class ObjectiveService {
             return null;
          return objectiveRepository.findByGoal(goal);
     }
+    public Objective createObjective(Objective objective) {
+        return objectiveRepository.save(objective);
+    }
+
+    public Objective updateObjective(Objective objective) {
+        return objectiveRepository.save(objective);
+    }
+
+    public void deleteObjective(Long id) {
+        objectiveRepository.deleteById(id);
+    }
 }

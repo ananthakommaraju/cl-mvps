@@ -6,7 +6,7 @@
 
     <groupId>com.consumerlending</groupId>
     <artifactId>generative-appraisal</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -44,6 +44,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+          <groupId>com.google.cloud</groupId>
+          <artifactId>google-cloud-storage</artifactId>
+          <version>2.33.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,13 +61,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <finalName>generative-appraisal</finalName>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                </configuration>
+                 </configuration>
             </plugin>
         </plugins>
     </build>
