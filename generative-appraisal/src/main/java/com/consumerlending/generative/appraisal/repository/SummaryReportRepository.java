@@ -1,7 +1,7 @@
-package com.example.appraisal.repository;
+package com.consumerlending.generative.appraisal.repository;
 
-import com.example.appraisal.domain.Employee;
-import com.example.appraisal.domain.SummaryReport;
+import com.consumerlending.generative.appraisal.domain.Employee;
+import com.consumerlending.generative.appraisal.domain.SummaryReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

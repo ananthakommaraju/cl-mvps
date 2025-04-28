@@ -1,9 +1,16 @@
-package com.example.appraisal.domain;
+package com.consumerlending.generative.appraisal.domain;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Appraisal {
 
     @Id
@@ -15,28 +22,4 @@ public class Appraisal {
 
     @OneToMany(mappedBy = "appraisal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public List<Goal> getGoals() {
-        return goals;
-    }
-
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
-    }
 }

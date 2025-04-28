@@ -1,8 +1,8 @@
-package com.example.appraisal.controller;
+package com.consumerlending.generative.appraisal.controller;
 
-import com.example.appraisal.domain.SummaryReport;
-import com.example.appraisal.service.SummaryReportService;
+import com.consumerlending.generative.appraisal.domain.SummaryReport;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.consumerlending.generative.appraisal.service.SummaryReportService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

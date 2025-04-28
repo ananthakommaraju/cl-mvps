@@ -1,7 +1,7 @@
-package com.example.appraisal.repository;
+package com.consumerlending.generative.appraisal.repository;
 
-import com.example.appraisal.domain.Goal;
-import com.example.appraisal.domain.Objective;
+import com.consumerlending.generative.appraisal.domain.Goal;
+import com.consumerlending.generative.appraisal.domain.Objective;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.example.appraisal.controller;
+package com.consumerlending.generative.appraisal.controller;
 
-import com.example.appraisal.domain.Employee;
-import com.example.appraisal.service.EmployeeService;
+import com.consumerlending.generative.appraisal.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.consumerlending.generative.appraisal.service.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +24,6 @@ public class EmployeeController {
 
     @GetMapping("/{name}")
     public Employee getEmployeeByName(@PathVariable String name) {
-        return employeeService.findByName(name);
+        return employeeService.findByName(name).get();
     }
 }

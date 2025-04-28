@@ -1,7 +1,7 @@
-package com.generative.appraisal.controller;
+package com.consumerlending.generative.appraisal.controller;
 
-import com.generative.appraisal.domain.Accomplishment;
-import com.generative.appraisal.service.AccomplishmentService;
+import com.consumerlending.generative.appraisal.domain.Accomplishment;
+import com.consumerlending.generative.appraisal.service.AccomplishmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

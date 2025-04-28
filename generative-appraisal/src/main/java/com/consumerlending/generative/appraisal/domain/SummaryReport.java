@@ -1,8 +1,19 @@
-package com.example.appraisal.domain;
+package com.consumerlending.generative.appraisal.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class SummaryReport {
 
     @Id
@@ -16,36 +27,4 @@ public class SummaryReport {
 
     @OneToOne
     private Appraisal appraisal;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Appraisal getAppraisal() {
-        return appraisal;
-    }
-
-    public void setAppraisal(Appraisal appraisal) {
-        this.appraisal = appraisal;
-    }
 }

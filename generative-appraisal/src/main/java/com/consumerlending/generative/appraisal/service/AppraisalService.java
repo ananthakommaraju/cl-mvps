@@ -1,9 +1,11 @@
-package com.example.appraisal.service;
+package com.consumerlending.generative.appraisal.service;
 
-import com.example.appraisal.domain.Appraisal;
-import com.example.appraisal.domain.Employee;
-import com.example.appraisal.repository.AppraisalRepository;
+import com.consumerlending.generative.appraisal.domain.Appraisal;
+import com.consumerlending.generative.appraisal.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
+
+import com.consumerlending.generative.appraisal.repository.AppraisalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +15,16 @@ public class AppraisalService {
 
     @Autowired
     private AppraisalRepository appraisalRepository;
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<Appraisal> findAll() {
         return appraisalRepository.findAll();
     }
-
-    public List<Appraisal> findByEmployee(Employee employee) {
+    
+    public List<Appraisal> findByEmployee(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         return appraisalRepository.findByEmployee(employee);
     }
 }

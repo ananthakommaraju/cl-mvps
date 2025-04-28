@@ -1,11 +1,12 @@
-package com.example.appraisal.service;
+package com.consumerlending.generative.appraisal.service;
 
-import com.example.appraisal.domain.Employee;
-import com.example.appraisal.repository.EmployeeRepository;
+import com.consumerlending.generative.appraisal.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -17,7 +18,12 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee findByName(String name) {
-        return employeeRepository.findByName(name);
+    public Optional<Employee> findByName(String name) {
+        List<Employee> employees = employeeRepository.findByName(name);
+        if (!employees.isEmpty()) {
+            return Optional.of(employees.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 }

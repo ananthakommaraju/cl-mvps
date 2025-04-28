@@ -1,4 +1,4 @@
-package com.generative.appraisal;
+package com.consumerlending.generative.appraisal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

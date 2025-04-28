@@ -1,8 +1,8 @@
-package com.example.appraisal.controller;
+package com.consumerlending.generative.appraisal.controller;
 
-import com.example.appraisal.domain.Goal;
-import com.example.appraisal.service.GoalService;
+import com.consumerlending.generative.appraisal.domain.Goal;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.consumerlending.generative.appraisal.service.GoalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
