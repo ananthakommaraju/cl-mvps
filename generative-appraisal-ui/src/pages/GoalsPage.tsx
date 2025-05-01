@@ -1,13 +1,12 @@
 import React from 'react';
-import GoalList from '../components/Goal/GoalList';
+import Goals from '../components/Goals/Goals';
 
 const GoalsPage: React.FC = () => {
   return (
     <div>
       <h1>Goals</h1>
-      <GoalList />
+      <Goals />
     </div>
   );
 };
-
 export default GoalsPage;

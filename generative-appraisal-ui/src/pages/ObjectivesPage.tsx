@@ -1,11 +1,11 @@
 import React from 'react';
-import ObjectiveList from '../components/Objective/ObjectiveList';
+import Objectives from '../components/Objectives/Objectives';
 
 const ObjectivesPage: React.FC = () => {
   return (
     <div>
       <h1>Objectives</h1>
-      <ObjectiveList />
+      <Objectives />
     </div>
   );
 };

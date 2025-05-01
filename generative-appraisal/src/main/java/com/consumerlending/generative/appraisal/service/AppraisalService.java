@@ -10,14 +10,13 @@ import com.consumerlending.generative.appraisal.repository.AppraisalSummaryRepos
 import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
 
 import com.consumerlending.generative.appraisal.repository.AppraisalRepository;
-import com.consumerlending.generative.appraisal.repository.GoalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class AppraisalService {
