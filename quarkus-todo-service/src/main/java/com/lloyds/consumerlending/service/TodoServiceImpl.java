@@ -21,7 +21,8 @@ public class TodoServiceImpl implements TodoService {
 
 
     public Todo getById(Long id) {
-        return todoRepository.findById(id);
+        return todoRepository.findById(id)
+        .orElse(null);
     }
 
 
@@ -39,4 +40,3 @@ public class TodoServiceImpl implements TodoService {
         todoRepository.delete(id);
     }
 }
-@ApplicationScoped
