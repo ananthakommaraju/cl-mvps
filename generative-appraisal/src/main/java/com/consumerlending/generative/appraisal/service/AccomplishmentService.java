@@ -2,9 +2,9 @@ package com.consumerlending.generative.appraisal.service;
 
 import com.consumerlending.generative.appraisal.domain.Accomplishment;
 import com.consumerlending.generative.appraisal.domain.Objective;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.consumerlending.generative.appraisal.repository.AccomplishmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.consumerlending.generative.appraisal.repository.ObjectiveRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;

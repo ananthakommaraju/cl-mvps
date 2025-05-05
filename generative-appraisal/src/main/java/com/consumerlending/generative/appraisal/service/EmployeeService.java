@@ -1,12 +1,14 @@
 package com.consumerlending.generative.appraisal.service;
 
 import com.consumerlending.generative.appraisal.domain.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class EmployeeService {    
@@ -14,6 +16,7 @@ public class EmployeeService {
 
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
+
         this.employeeRepository = employeeRepository;
     }
 

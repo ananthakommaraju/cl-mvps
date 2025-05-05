@@ -10,8 +10,8 @@ import com.consumerlending.generative.appraisal.repository.AppraisalSummaryRepos
 import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
 
 import com.consumerlending.generative.appraisal.repository.AppraisalRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

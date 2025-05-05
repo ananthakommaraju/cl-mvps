@@ -15,8 +15,8 @@ public class GoalService {
 
     private final GoalRepository goalRepository;
     private final EmployeeRepository employeeRepository;
-
     @Autowired
+
     public GoalService(GoalRepository goalRepository, EmployeeRepository employeeRepository) {
         this.goalRepository = goalRepository;
         this.employeeRepository = employeeRepository;
