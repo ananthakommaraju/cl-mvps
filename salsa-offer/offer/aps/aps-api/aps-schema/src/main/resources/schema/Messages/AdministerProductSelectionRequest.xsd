@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://LIB_SIM_ProductSalesReferenceDataManager/Messages"
+	xmlns:bons0="http://LIB_SIM_GMO/Messages"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:bons1="http://LIB_SIM_BO/BusinessObjects">
+	<xsd:import schemaLocation="../../../../../target/common-schema/schema/lib-sim-bo/BusinessObjects/Product.xsd"
+		namespace="http://LIB_SIM_BO/BusinessObjects">
+	</xsd:import>
+	<xsd:import namespace="http://LIB_SIM_GMO/Messages"
+		schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Messages/BaseRequest.xsd" />
+	<xsd:complexType name="AdministerProductSelectionRequest">
+		<xsd:complexContent>
+			<xsd:extension base="bons0:BaseRequest">
+
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="existingProduct"
+						type="bons1:Product" maxOccurs="unbounded">
+					</xsd:element>
+					<xsd:element minOccurs="0" name="appliedProduct"
+						type="bons1:Product">
+					</xsd:element>
+					<xsd:element minOccurs="0"
+						name="applicationTypeCode" type="xsd:string">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

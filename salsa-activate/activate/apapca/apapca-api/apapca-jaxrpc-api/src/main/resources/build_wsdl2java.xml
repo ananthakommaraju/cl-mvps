@@ -1,0 +1,24 @@
+<project name="WSDL2Java" basedir=".">
+
+    <taskdef name="wsdl2java" classname="com.ibm.websphere.ant.tasks.WSDL2Java"/>
+    <property name="dir.java.ws.src" value="${basedir}/../apapca-schema/src/main/resources"/>
+    <property name="dir.output" value="${generated-sources.ibm-wsdl-java}"/>
+    <property name="dir.ns2pk.prop.location" value="${basedir}/src/main/resources"/>
+
+    <target name="doWSDLtoJava" depends="doWSDLtoJavaForApa"/>
+
+    <target name="doWSDLtoJavaForApa" description="WSDL To Java">
+        <wsdl2java
+                url="${dir.java.ws.src}/schema/Interfaces/TSK_SalesProcessManagement_Exp_IA_ActivateProductArrangementExport1.wsdl"
+                output="${dir.output}"
+                role="client"
+                container="web"
+                genImplSer="true"
+                genJava="overwrite"
+                genXml="overwrite"
+                all="true"
+                fileNStoPkg="${dir.ns2pk.prop.location}/ns2pkg.properties"
+                introspect="true" verbose="false">
+        </wsdl2java>
+    </target>
+</project>

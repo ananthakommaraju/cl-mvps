@@ -1,0 +1,75 @@
+# Created mostly by http://gitignore.io
+
+temp
+test-sav
+
+### IntelliJ ###
+*.iml
+*.ipr
+*.iws
+.idea/
+
+### Eclipse ###
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+### Linux ###
+.*
+!.gitignore
+!.git*
+*~
+
+
+### Windows ###
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# H2 Database
+*.db
+
+# Misc
+*.log*
+target/
+dependency-reduced-pom.xml
+testpad.groovy
+receive
+soap-xml-message-logs/
+nohup.out
+perf-*
+provision-rpc-output.txt
+test-logging.log
+r5-cit-processed.dot
+remotemockserver.log*
+jenkins
+diffs/

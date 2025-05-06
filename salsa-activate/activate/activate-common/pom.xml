@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>activate</artifactId>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <name>Salsa::Activate::activate-common</name>
+    <artifactId>activate-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>tms-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>asm-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>sira-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>soa-dms-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>soa-ipm-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>cm-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>soa-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>soa-sas-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>switches-fuses</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>pam-db</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>pad-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>dp-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>ocis-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>prd-jaxws-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>core-testsupport</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>application-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>account-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>runtime</artifactId>
+        </dependency>
+        <!-- salsa service api -->
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>apapca-jaxws-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

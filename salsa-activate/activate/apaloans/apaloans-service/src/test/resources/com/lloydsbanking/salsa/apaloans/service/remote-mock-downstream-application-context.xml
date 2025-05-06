@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <import resource="classpath:/com/lloydsbanking/salsa/logging.xml"/>
+
+    <bean id="apaLoansClient" class="com.lloydsbanking.salsa.apaloans.client.ApaloansClientImpl">
+        <constructor-arg value="${apaloans.service.url}"/>
+        <constructor-arg value="true"/>
+    </bean>
+</beans>

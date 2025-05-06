@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:bons0="http://LIB_SIM_GMO/Messages"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:bons1="http://LIB_SIM_BO/BusinessObjects"
+        targetNamespace="http://LIB_SIM_SalesProcessManagement/Messages">
+
+
+    <xsd:import
+            schemaLocation="../../../../../target/common-schema/schema/lib-sim-bo/BusinessObjects/ProductArrangement.xsd"
+            namespace="http://LIB_SIM_BO/BusinessObjects">
+    </xsd:import>
+    <xsd:import namespace="http://LIB_SIM_GMO/Messages"
+                schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Messages/BaseResponse.xsd"/>
+
+    <xsd:complexType name="OfferProductArrangementResponse">
+        <xsd:complexContent>
+            <xsd:extension base="bons0:BaseResponse">
+
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="productArrangement"
+                                 type="bons1:ProductArrangement">
+                    </xsd:element>
+
+                    <xsd:element minOccurs="0"
+                                 name="existingProductArrangements" type="bons1:ProductArrangement"
+                                 maxOccurs="unbounded">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

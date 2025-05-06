@@ -1,0 +1,74 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.apapca"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.activate"/>
+
+    <import resource="classpath:/com/lloydsbanking/salsa/apapca/downstream-clients.xml"/>
+    <!--These are defined in the downstream client for PAM DB -->
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-create.xml"/>
+
+    <bean id="headerRetriever"
+          class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"></bean>
+    <bean id="requestToResponseHeaderConverter"
+          class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.application.converter.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverterAccount"
+          class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverterOu"
+          class="com.lloydsbanking.salsa.downstream.fsou.convert.BapiHeaderToStHeaderConverter"></bean>
+
+    <bean id="alternateSortCodeRetriever"
+          class="com.lloydsbanking.salsa.apapca.service.propose.downstream.AlternateSortCodeRetriever">
+        <property name="cbsE469ClientMap">
+            <util:map id="cbsE469ClientMap">
+                <entry key="LTB" value-ref="e469ClientLtb"/>
+                <entry key="HLX" value-ref="e469ClientHlx"/>
+                <entry key="BOS" value-ref="e469ClientBos"/>
+                <entry key="VER" value-ref="e469ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="proposeAccountRetriever"
+          class="com.lloydsbanking.salsa.apapca.service.propose.downstream.ProposeAccountRetriever">
+        <property name="cbsE229ClientMap">
+            <util:map id="cbsE229ClientMap">
+                <entry key="LTB" value-ref="e229ClientLtb"/>
+                <entry key="HLX" value-ref="e229ClientHlx"/>
+                <entry key="BOS" value-ref="e229ClientBos"/>
+                <entry key="VER" value-ref="e229ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="cBSCustDetailsTrialRetriever"
+          class="com.lloydsbanking.salsa.apapca.service.fulfil.downstream.CBSCustDetailsTrialRetriever">
+        <property name="cbsE226ClientMap">
+            <util:map id="cbsE226ClientMap">
+                <entry key="LTB" value-ref="e226ClientLtb"/>
+                <entry key="HLX" value-ref="e226ClientHlx"/>
+                <entry key="BOS" value-ref="e226ClientBos"/>
+                <entry key="VER" value-ref="e226ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="retrievePamService"
+          class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"></bean>
+    <bean id="updatePamService"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamService"></bean>
+    <bean id="updatePamServiceForActivateDA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateDA"></bean>
+
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"></bean>
+
+</beans>

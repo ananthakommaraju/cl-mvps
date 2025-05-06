@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>OPACC EAR</display-name>
+    <module id="OPACCSalsaModule">
+        <web>
+            <web-uri>opacc.war</web-uri>
+            <context-root>sales/offer/v1_0/opacreditcard</context-root>
+        </web>
+    </module>
+</application>

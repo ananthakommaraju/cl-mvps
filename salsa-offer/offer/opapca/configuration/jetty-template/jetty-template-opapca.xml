@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+    <Get name="threadPool">
+        <Set name="maxThreads">500</Set>
+    </Get>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPrdData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPrdData.database.driver.class}</Set>
+                <Set name="url">${ibPrdData.database.connectionstring}</Set>
+                <Set name="username">${ibPrdData.database.username}</Set>
+                <Set name="password">${ibPrdData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPrdData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>rpc.service.url</Arg>
+        <Arg type="java.lang.String">${rpc.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>eligibility.service.url</Arg>
+        <Arg type="java.lang.String">${eligibility.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPamData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPamData.database.driver.class}</Set>
+                <Set name="url">${ibPamData.database.connectionstring}</Set>
+                <Set name="username">${ibPamData.database.username}</Set>
+                <Set name="password">${ibPamData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPamData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f447.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f447.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f336.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f336.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f061.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f061.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f062.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f062.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>asm.f204.service.url</Arg>
+        <Arg type="java.lang.String">${asm.f204.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>asm.f205.service.url</Arg>
+        <Arg type="java.lang.String">${asm.f205.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>eidv.x711.bos.service.url</Arg>
+        <Arg type="java.lang.String">${eidv.x711.bos.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>eidv.x711.ltb.service.url</Arg>
+        <Arg type="java.lang.String">${eidv.x711.ltb.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>eidv.x711.hlx.service.url</Arg>
+        <Arg type="java.lang.String">${eidv.x711.hlx.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>eidv.x711.ver.service.url</Arg>
+        <Arg type="java.lang.String">${eidv.x711.ver.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>sira.service.url</Arg>
+        <Arg type="java.lang.String">${sira.service.url}</Arg>
+    </New>
+</Configure>

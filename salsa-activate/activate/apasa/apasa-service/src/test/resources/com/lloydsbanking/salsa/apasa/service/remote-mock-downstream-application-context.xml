@@ -1,0 +1,91 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:/com/lloydsbanking/salsa/logging.xml"/>
+
+    <bean id="apaSaClient" class="com.lloydsbanking.salsa.apasa.client.ApasaClientImpl">
+        <constructor-arg value="${apasa.service.url}"/>
+        <constructor-arg value="true"/>
+    </bean>
+
+
+
+    <jaxws:client id="mockControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlServicePortType"
+                  address="${remotemock.control.url}"/>
+    <jaxws:client id="mockRpcControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlRpcServicePortType"
+                  address="${remotemock.control.salsa.rpc.url}"/>
+    <jaxws:client id="mockAsmF425Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlAsmF425ServicePortType"
+                  address="${remotemock.control.asm.f425.url}"/>
+    <jaxws:client id="mockSendCommunicationControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlSendCommunicationManagerServicePortType"
+                  address="${remotemock.control.sendcommunication.url}"/>
+    <jaxws:client id="mockScheduleCommunicationControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlScheduleCommunicationManagerServicePortType"
+                  address="${remotemock.control.schedulecommunication.url}"/>
+    <jaxws:client id="mockTmsX741Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlTmsX741ServicePortType"
+                  address="${remotemock.control.tms.x741.url}"/>
+    <jaxws:client id="mockFsAccountControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlFsAccountServicePortType"
+                  address="${remotemock.control.fs.account.url}"/>
+    <jaxws:client id="mockCbsE502Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE502ServicePortType"
+                  address="${remotemock.control.cbs.e502.url}"/>
+    <jaxws:client id="f060ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF060ServicePortType"
+                  address="${remotemock.control.ocis.f060.url}"/>
+    <jaxws:client id="mockCbsE032Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE032ServicePortType"
+                  address="${remotemock.control.cbs.e032.url}"/>
+    <jaxws:client id="c658ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisC658ServicePortType"
+                  address="${remotemock.control.ocis.c658.url}"/>
+
+    <jaxws:client id="c234ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisC234ServicePortType"
+                  address="${remotemock.control.ocis.c234.url}"/>
+
+    <jaxws:client id="soaDMSServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlSoaDMSServicePortType"
+                  address="${remotemock.control.soa.dms.url}"/>
+    <jaxws:client id="f061ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF061ServicePortType"
+                  address="${remotemock.control.ocis.f061.url}"/>
+    <jaxws:client id="f062ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF062ServicePortType"
+                  address="${remotemock.control.ocis.f062.url}"/>
+
+    <jaxws:client id="f060ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF060ServicePortType"
+                  address="${remotemock.control.ocis.f060.url}"/>
+
+
+    <jaxws:client id="mockControlSoaServiceArrangementSetupServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlSoaServiceArrangementSetupServicePortType"
+                  address="${remotemock.control.soa.sas.url}"/>
+
+    <jaxws:client id="mockControlEncryptDataServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlEncryptDataServicePortType"
+                  address="${remotemock.control.dp.encrypt.url}"/>
+
+    <jaxws:client id="c241ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisC241ServicePortType"
+                  address="${remotemock.control.ocis.c241.url}"/>
+
+    <jaxws:client id="involvedPartyManagementServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlSoaInvolvedPartyManagementServicePortType"
+                  address="${remotemock.control.soa.ipm.url}"/>
+
+    <jaxws:client id="mockControlFsApplicationServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlFsApplicationServicePortType"
+                  address="${remotemock.control.fs.application.url}"/>
+
+</beans>

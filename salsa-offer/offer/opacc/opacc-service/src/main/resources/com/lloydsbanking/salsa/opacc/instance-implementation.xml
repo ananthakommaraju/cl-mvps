@@ -1,0 +1,54 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.opacc.service"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.opacc"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.offer"/>
+
+    <import resource="classpath:/com/lloydsbanking/salsa/offer/offer-common.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/opacc/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/downstream/pam/pam-create.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/logging/application/application-logging.xml"/>
+
+    <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"/>
+    <bean id="requestToResponseHeaderConverter" class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"/>
+
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"/>
+
+
+    <bean id="exceptionHelper" class="com.lloydsbanking.salsa.opacc.service.utility.ExceptionHelper"/>
+    <bean id="encryptDataService" class="com.lloydsbanking.salsa.opacc.service.downstream.EncryptDataService"/>
+    <bean id="encryptDataRetriever" class="com.lloydsbanking.salsa.opacc.service.downstream.EncryptDataRetriever"/>
+
+    <bean id="eligibilityRetriever" class="com.lloydsbanking.salsa.offer.downstream.EligibilityRetriever"/>
+    <bean id="eligibilityService" class="com.lloydsbanking.salsa.opacc.service.downstream.EligibilityService"/>
+    <bean id="applicationTypeEvaluator"
+          class="com.lloydsbanking.salsa.opacc.service.evaluate.ApplicationTypeEvaluator"/>
+    <bean id="switchClient" class="com.lloydsbanking.salsa.downstream.switches.SwitchServiceImpl"/>
+    <bean id="administerProductSelectionService"
+          class="com.lloydsbanking.salsa.downstream.prd.service.AdministerProductSelectionService"/>
+    <bean id="createPamService" class="com.lloydsbanking.salsa.downstream.pam.service.CreatePamService"/>
+    <bean id="updatePamService" class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamService"/>
+    <bean id="retrievePamService" class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"/>
+    <bean id="offerToRpcRequestConverterForCreditCard"
+          class="com.lloydsbanking.salsa.offer.apply.convert.OfferToRpcRequestConverterForCreditCard"/>
+    <bean id="f424RequestFactory"
+          class="com.lloydsbanking.salsa.offer.apply.convert.RetrieveCreditDecisionRequestFactory"/>
+    <bean id="creditDecisionRetriever"
+          class="com.lloydsbanking.salsa.offer.apply.downstream.CreditDecisionRetriever"/>
+    <bean id="applyServiceCc" class="com.lloydsbanking.salsa.offer.apply.downstream.ApplyServiceCC"/>
+    <bean id="administerProductService" class="com.lloydsbanking.salsa.offer.apply.downstream.AdministerProductService"/>
+    <bean id="requestValidatorAndInitializer"
+          class="com.lloydsbanking.salsa.opacc.service.validate.RequestValidatorAndInitializer"/>
+    <bean id="exceptionUtilityAdmin" class="com.lloydsbanking.salsa.downstream.prd.exception.ExceptionUtility"/>
+    <bean id="offerProductArrangementResponseFactory"
+          class="com.lloydsbanking.salsa.opacc.service.convert.OfferProductArrangementResponseFactory"/>
+
+</beans>
+

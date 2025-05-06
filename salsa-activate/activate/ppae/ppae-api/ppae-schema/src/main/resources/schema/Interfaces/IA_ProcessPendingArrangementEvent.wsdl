@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="IA_ProcessPendingArrangementEvent" targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent" xmlns:bons1="http://LIB_SIM_SalesProcessManagement/Messages" xmlns:tns="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent">
+      <xsd:import namespace="http://LIB_SIM_SalesProcessManagement/Messages" schemaLocation="../Messages/ProcessPendingArrangementEventRequest.xsd"/>
+      <xsd:element name="processPendingArrangementEvent">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="request" nillable="true" type="bons1:ProcessPendingArrangementEventRequest"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+    <wsdl:message name="processPendingArrangementEventRequestMsg">
+    <wsdl:part element="tns:processPendingArrangementEvent" name="processPendingArrangementEventParameters"/>
+  </wsdl:message>
+    <wsdl:portType name="IA_ProcessPendingArrangementEvent">
+    <wsdl:operation name="processPendingArrangementEvent">
+      <wsdl:input message="tns:processPendingArrangementEventRequestMsg" name="processPendingArrangementEventRequest"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

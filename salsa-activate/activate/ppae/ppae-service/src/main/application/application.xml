@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>PPAE EAR</display-name>
+    <module id="PPAESalsaModule">
+        <web>
+            <web-uri>ppae.war</web-uri>
+            <context-root>sales/activate/v1_0/processPendingArrangementEvent</context-root>
+        </web>
+    </module>
+</application>

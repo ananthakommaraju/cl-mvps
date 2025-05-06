@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>OPAPCA EAR</display-name>
+    <module id="OPAPCASalsaModule">
+        <web>
+            <web-uri>opapca.war</web-uri>
+            <context-root>sales/offer/v1_0/opacurrentaccount</context-root>
+        </web>
+    </module>
+</application>

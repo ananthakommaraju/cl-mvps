@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>DECI EAR</display-name>
+    <module id="DECISalsaModule">
+        <web>
+            <web-uri>deciv2.war</web-uri>
+            <context-root>sales/eligibility/v2_0</context-root>
+        </web>
+    </module>
+</application>

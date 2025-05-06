@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+    <Get name="threadPool">
+        <Set name="maxThreads">500</Set>
+    </Get>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jms/CardAcquireMessageQCF</Arg>
+        <Arg>
+            <New class="org.apache.activemq.ActiveMQConnectionFactory">
+                <Arg>vm://localhost?brokerConfig=xbean:activemq.xml</Arg>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jms/CardAcquireMessageQ</Arg>
+        <Arg>
+            <New class="org.apache.activemq.command.ActiveMQQueue">
+                <Set name="physicalName">defaultDestination</Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPamData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPamData.database.driver.class}</Set>
+                <Set name="url">${ibPamData.database.connectionstring}</Set>
+                <Set name="username">${ibPamData.database.username}</Set>
+                <Set name="password">${ibPamData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPamData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/switches</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${switches.database.driver.class}</Set>
+                <Set name="url">${switches.database.connectionstring}</Set>
+                <Set name="username">${switches.database.username}</Set>
+                <Set name="password">${switches.database.password}</Set>
+
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${switches.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fdi.f251.service.url</Arg>
+        <Arg type="java.lang.String">${fdi.f251.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fdi.f241.service.url</Arg>
+        <Arg type="java.lang.String">${fdi.f241.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fdi.f241v1.service.url</Arg>
+        <Arg type="java.lang.String">${fdi.f241v1.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>salsa.fs.boxid</Arg>
+        <Arg type="java.lang.Integer">${salsa.fs.boxid}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f259.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f259.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>dp.encrypt.service.url</Arg>
+        <Arg type="java.lang.String">${dp.encrypt.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.system.service.url</Arg>
+        <Arg type="java.lang.String">${fs.system.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>rpc.service.url</Arg>
+        <Arg type="java.lang.String">${rpc.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>sendcommunication.service.url</Arg>
+        <Arg type="java.lang.String">${sendcommunication.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>schedulecommunication.service.url</Arg>
+        <Arg type="java.lang.String">${schedulecommunication.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>tms.x741.service.url</Arg>
+        <Arg type="java.lang.String">${tms.x741.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>asm.f425.service.url</Arg>
+        <Arg type="java.lang.String">${asm.f425.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.application.service.url</Arg>
+        <Arg type="java.lang.String">${fs.application.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.account.service.url</Arg>
+        <Arg type="java.lang.String">${fs.account.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>generatedocument.service.url</Arg>
+        <Arg type="java.lang.String">${generatedocument.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f061.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f061.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f062.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f062.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f060.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f060.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>soa.sas.service.url</Arg>
+        <Arg type="java.lang.String">${soa.sas.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>soa.ipm.service.url</Arg>
+        <Arg type="java.lang.String">${soa.ipm.service.url}</Arg>
+    </New>
+
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.c241.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.c241.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>soa.dms.service.url</Arg>
+        <Arg type="java.lang.String">${soa.dms.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.c658.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.c658.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.c234.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.c234.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>sira.service.url</Arg>
+        <Arg type="java.lang.String">${sira.service.url}</Arg>
+    </New>
+</Configure>

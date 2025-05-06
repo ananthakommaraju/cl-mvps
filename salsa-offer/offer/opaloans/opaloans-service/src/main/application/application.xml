@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>OPALOANS EAR</display-name>
+    <module id="OPALOANSSalsaModule">
+        <web>
+            <web-uri>opaloans.war</web-uri>
+            <context-root>sales/offer/v1_0/opaloans</context-root>
+        </web>
+    </module>
+</application>

@@ -1,0 +1,126 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <import resource="classpath:/com/lloydsbanking/salsa/activate/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/apasa/service/fulfil/downstream-clients.xml"/>
+
+
+    <tx:annotation-driven/>
+    <jee:jndi-lookup id="ibPamConnectionPool" jndi-name="jdbc/ibPamData"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ibPamEntityManagerFactory"/>
+    </bean>
+
+    <bean id="ibPamHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+        <property name="databasePlatform"
+                  value="${ibPamData.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+    </bean>
+
+    <bean id="ibPamEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.pam.model"/>
+        <property name="jpaVendorAdapter" ref="ibPamHibernateJpaAdapter"/>
+        <property name="dataSource" ref="ibPamConnectionPool"/>
+    </bean>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.pam.jdbc"
+                      entity-manager-factory-ref="ibPamEntityManagerFactory"/>
+
+    <bean id="switchService" class="com.lloydsbanking.salsa.downstream.switches.SwitchServiceImpl"/>
+    <jee:jndi-lookup id="switchesConnectionPool" jndi-name="jdbc/switches"/>
+
+    <bean id="switchesTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="switchesEntityManagerFactory"/>
+    </bean>
+
+    <bean id="switchesHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="false"/>
+        <property name="databasePlatform"
+                  value="${switches.database.hibernate.dialect:org.hibernate.dialect.DB2Dialect}"/>
+    </bean>
+
+    <bean id="switchesEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.switches.model"/>
+        <property name="jpaVendorAdapter" ref="switchesHibernateJpaAdapter"/>
+        <property name="dataSource" ref="switchesConnectionPool"/>
+    </bean>
+
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.switches.jdbc"
+                      entity-manager-factory-ref="switchesEntityManagerFactory"
+                      transaction-manager-ref="switchesTransactionManager"/>
+
+    <bean class="com.lloydsbanking.salsa.aop.CallLoggingAndTimingAutoProxyCreator">
+        <constructor-arg>
+            <list>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="accountClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.account.client.AccountClient"
+                      c:prefix="Account-Client"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="referenceDataLookUpDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.pam.jdbc.ReferenceDataLookUpDao"
+                      c:prefix="PAM-LookUp"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f425Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.asm.client.f425.F425Client"
+                      c:prefix="ASM-retrieveUpdatedCreditDecision-F425"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f060Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ocis.client.f060.F060Client"
+                      c:prefix="OCIS-updateMarketingPreference-F060"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f061Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ocis.client.f061.F061Client"
+                      c:prefix="OCIS-createInvolvedParty-F061"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f062Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ocis.client.f062.F062Client"
+                      c:prefix="OCIS-updateCustomerRecord-F062"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="x741Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.tms.client.x741.X741Client"
+                      c:prefix="TMS-X741"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="applicationClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.application.client.ApplicationClient"
+                      c:prefix="Application-Client"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e502ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502Client"
+                      c:prefix="CBS-amendRollOverAccount-E502-LTB"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e502ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502Client"
+                      c:prefix="CBS-amendRollOverAccount-E502-VER"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e502ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502Client"
+                      c:prefix="CBS-amendRollOverAccount-E502-BOS"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e502ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502Client"
+                      c:prefix="CBS-amendRollOverAccount-E502-HLX"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e032ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032Client"
+                      c:prefix="CBS-CreateStandingOrder-E032-LTB"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e032ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032Client"
+                      c:prefix="CBS-CreateStandingOrder-E032-VER"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e032ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032Client"
+                      c:prefix="CBS-CreateStandingOrder-E032-BOS"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e032ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032Client"
+                      c:prefix="CBS-CreateStandingOrder-E032-HLX"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="soaIpmClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.soaipm.client.involvedpartymanager.IPMClient"
+                      c:prefix="SOA-RecordCustomerDetails"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="soaDocumentManagerClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.soadms.client.documentmanager.SOADocumentManagerClient"
+                      c:prefix="SOA-DocumentManagerService"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+</beans>

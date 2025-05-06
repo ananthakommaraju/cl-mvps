@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <artifactId>apapca</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+    <artifactId>apapca-client</artifactId>
+    <name>Salsa::Activate::APAPCA::apapca-client</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>apapca-jaxws-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>common-jaxws-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>core-testsupport</artifactId>
+        </dependency>
+    </dependencies>
+</project>

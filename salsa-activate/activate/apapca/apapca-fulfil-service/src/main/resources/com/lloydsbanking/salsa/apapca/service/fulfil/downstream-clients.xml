@@ -1,0 +1,86 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+    <bean id="c808Client" class="com.lloydsbanking.salsa.downstream.cmas.client.c808.C808ClientImpl">
+        <constructor-arg value="${cmas.c808.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.creditcardplatform.cmas.C808EnqInitNewCrdOrd_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cmas.c808.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c812Client" class="com.lloydsbanking.salsa.downstream.cmas.client.c812.C812ClientImpl">
+        <constructor-arg value="${cmas.c812.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.creditcardplatform.cmas.C812FunVldtNewCrdOrd_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cmas.c812.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c818Client" class="com.lloydsbanking.salsa.downstream.cmas.client.c818.C818ClientImpl">
+        <constructor-arg value="${cmas.c818.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.creditcardplatform.cmas.C818AddCardOrder_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cmas.c818.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c846Client" class="com.lloydsbanking.salsa.downstream.cmas.client.c846.C846ClientImpl">
+        <constructor-arg value="${cmas.c846.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.productmanufacturing.cmas.C846BroCardTypePlasticType_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cmas.c846.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e226ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e226.E226ClientImpl">
+        <constructor-arg value="${cbs.e226.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E226AddCBSCustDecnTrail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e226.ltb.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e226ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e226.E226ClientImpl">
+        <constructor-arg value="${cbs.e226.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E226AddCBSCustDecnTrail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e226.ver.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e226ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e226.E226ClientImpl">
+        <constructor-arg value="${cbs.e226.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E226AddCBSCustDecnTrail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e226.bos.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e226ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e226.E226ClientImpl">
+        <constructor-arg value="${cbs.e226.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E226AddCBSCustDecnTrail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e226.hlx.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="pegaClient" class="com.lloydsbanking.salsa.downstream.pega.client.PegaClientImpl">
+        <constructor-arg value="${pega.service.url}"/>
+        <constructor-arg>
+            <bean class="pegarules.soap.genericcasemgmtservicepackagev2.services.ServicesService"/>
+        </constructor-arg>
+        <constructor-arg value="${pega.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+</beans>

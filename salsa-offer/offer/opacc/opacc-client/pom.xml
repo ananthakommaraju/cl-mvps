@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <artifactId>opacc</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <artifactId>opacc-client</artifactId>
+    <name>Salsa::opacc::opacc-client</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>opacc-jaxws-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>common-jaxws-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>core-testsupport</artifactId>
+        </dependency>
+    </dependencies>
+</project>

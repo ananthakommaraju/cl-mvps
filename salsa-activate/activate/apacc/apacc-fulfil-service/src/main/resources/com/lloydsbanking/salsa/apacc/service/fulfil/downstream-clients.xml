@@ -1,0 +1,69 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
+
+
+    <jee:jndi-lookup id="jmsConnectionFactory" jndi-name="jms/CardAcquireMessageQCF"/>
+    <jee:jndi-lookup id="queue" jndi-name="jms/CardAcquireMessageQ"/>
+    <bean id="jmsDestResolver" class=" org.springframework.jms.support.destination.JndiDestinationResolver"/>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationResolver" ref="jmsDestResolver"/>
+        <property name="defaultDestination" ref="queue"/>
+    </bean>
+
+    <bean id="f259Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f259.F259ClientImpl">
+        <constructor-arg value="${ocis.f259.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.F259AddProductNew_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f259.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f241Client" class="com.lloydsbanking.salsa.downstream.fdi.client.f241.F241ClientImpl">
+        <constructor-arg value="${fdi.f241.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.salsa.soap.fdi.f241.objects.F241AddCustAcctCardDriver_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${fdi.f241.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f241V1Client" class="com.lloydsbanking.salsa.downstream.fdi.client.f241v1.F241V1ClientImpl">
+        <constructor-arg value="${fdi.f241v1.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.salsa.soap.fdi.f241V1.objects.F241AddCustAcctCardDriver_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${fdi.f241v1.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="fsSystemClient" class="com.lloydsbanking.salsa.downstream.fsystem.client.FsSystemClientImpl">
+        <constructor-arg value="${fs.system.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.system.System"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.system.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="generateDocumentClient"
+          class="com.lloydsbanking.salsa.downstream.cm.client.GenerateDocumentClient">
+        <constructor-arg value="${generatedocument.service.url}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+
+    <bean id="f251Client" class="com.lloydsbanking.salsa.downstream.fdi.client.f251.F251ClientImpl">
+        <constructor-arg value="${fdi.f251.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.creditcardplatform.fdi.F251AddOMSOfferDriver_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${fdi.f251.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+</beans>

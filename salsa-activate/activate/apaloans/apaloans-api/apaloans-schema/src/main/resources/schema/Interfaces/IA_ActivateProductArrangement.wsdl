@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="IA_ActivateProductArrangement" targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_ActivateProductArrangement" xmlns:bons1="http://LIB_SIM_SalesProcessManagement/Messages" xmlns:tns="http://LIB_SIM_SalesProcessManagement/IA_ActivateProductArrangement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_ActivateProductArrangement" xmlns:bons0="http://LIB_SIM_GMO/Faults">
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/ResourceNotAvailableError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/InternalServiceError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/ExternalServiceError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/DatabaseServiceError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/ExternalBusinessError.xsd"/>
+      <xsd:import namespace="http://LIB_SIM_SalesProcessManagement/Messages" schemaLocation="../Messages/ActivateProductArrangementRequest.xsd"/>
+      <xsd:import namespace="http://LIB_SIM_SalesProcessManagement/Messages" schemaLocation="../Messages/ActivateProductArrangementResponse.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Infrastructure/SOAP" schemaLocation="../../../../../target/common-schema/schema/LCSM/InfrastructureSOAP.xsd"/>
+        <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="../../../../../target/common-schema/schema/LCSM/InfrastructureSOAPSecurityHeader.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Enterprise/LCSM" schemaLocation="../../../../../target/common-schema/schema/LCSM/LCSMAdditionalHeaders.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Enterprise/LCSM" schemaLocation="../../../../../target/common-schema/schema/LCSM/LCSM.xsd"/>
+
+        <xsd:element name="activateProductArrangement">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="activateProductArrangementRequest" nillable="true" type="bons1:ActivateProductArrangementRequest"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="activateProductArrangementResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="activateProductArrangementResponse" nillable="true" type="bons1:ActivateProductArrangementResponse"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ExternalBusinessError_element" nillable="true" type="bons0:ExternalBusinessError"/>
+      <xsd:element name="ResourceNotAvailableError_element" nillable="true" type="bons0:ResourceNotAvailableError"/>
+            <xsd:element name="DatabaseServiceError_element" nillable="true" type="bons0:DatabaseServiceError"/>
+            <xsd:element name="InternalServiceError_element" nillable="true" type="bons0:InternalServiceError"/>
+            <xsd:element name="ExternalServiceError_element" nillable="true" type="bons0:ExternalServiceError"/>
+        </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="activateProductArrangementRequestMsg">
+    <wsdl:part element="tns:activateProductArrangement" name="activateProductArrangementParameters"/>
+  </wsdl:message>
+  <wsdl:message name="activateProductArrangementResponseMsg">
+    <wsdl:part element="tns:activateProductArrangementResponse" name="activateProductArrangementResult"/>
+  </wsdl:message>
+  <wsdl:message name="activateProductArrangement_internalSystemErrorMsg">
+    <wsdl:part element="tns:InternalServiceError_element" name="internalSystemError"/>
+  </wsdl:message>
+    <wsdl:message name="activateProductArrangement_externalSystemErrorMsg">
+    <wsdl:part element="tns:ExternalServiceError_element" name="externalSystemError"/>
+  </wsdl:message>
+    <wsdl:message name="activateProductArrangement_externalBusinessErrorMsg">
+    <wsdl:part element="tns:ExternalBusinessError_element" name="externalBusinessError"/>
+  </wsdl:message>
+    <wsdl:message name="activateProductArrangement_resourceNotAvailableErrorMsg">
+    <wsdl:part element="tns:ResourceNotAvailableError_element" name="resourceNotAvailableError"/>
+  </wsdl:message>
+    <wsdl:message name="activateProductArrangement_dataNotAvailableErrorMsg">
+    <wsdl:part element="tns:DatabaseServiceError_element" name="dataNotAvailableError"/>
+  </wsdl:message>
+    <wsdl:portType name="IA_ActivateProductArrangement">
+    <wsdl:operation name="activateProductArrangement">
+      <wsdl:input message="tns:activateProductArrangementRequestMsg" name="activateProductArrangementRequest"/>
+      <wsdl:output message="tns:activateProductArrangementResponseMsg" name="activateProductArrangementResponse"/>
+      <wsdl:fault message="tns:activateProductArrangement_internalSystemErrorMsg" name="internalSystemError"/>
+      <wsdl:fault message="tns:activateProductArrangement_externalSystemErrorMsg" name="externalSystemError"/>
+      <wsdl:fault message="tns:activateProductArrangement_externalBusinessErrorMsg" name="externalBusinessError"/>
+      <wsdl:fault message="tns:activateProductArrangement_resourceNotAvailableErrorMsg" name="resourceNotAvailableError"/>
+      <wsdl:fault message="tns:activateProductArrangement_dataNotAvailableErrorMsg" name="dataNotAvailableError"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

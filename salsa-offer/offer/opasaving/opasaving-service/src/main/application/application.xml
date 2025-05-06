@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>OpaSaving EAR</display-name>
+    <module id="OpaSavingSalsaModule">
+        <web>
+            <web-uri>opasaving.war</web-uri>
+            <context-root>sales/offer/v1_0/opasavings</context-root>
+        </web>
+    </module>
+</application>

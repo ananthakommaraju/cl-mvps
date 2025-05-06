@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="ID_DetermineProductEligibilityType" targetNamespace="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType" xmlns:bons1="http://LIB_SIM_ProductSalesReferenceDataManager/Messages" xmlns:tns="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType" xmlns:bons0="http://LIB_SIM_GMO/Faults">
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/ResourceNotAvailableError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/InternalServiceError.xsd"/>
+            <xsd:import namespace="http://LIB_SIM_GMO/Faults" schemaLocation="../../../../../target/common-schema/schema/lib-sim-gmo/Faults/DatabaseServiceError.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Infrastructure/SOAP" schemaLocation="../../../../../target/common-schema/schema/LCSM/InfrastructureSOAP.xsd"/>
+        <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="../../../../../target/common-schema/schema/LCSM/InfrastructureSOAPSecurityHeader.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Enterprise/LCSM" schemaLocation="../../../../../target/common-schema/schema/LCSM/LCSMAdditionalHeaders.xsd"/>
+        <xsd:import namespace="http://www.lloydstsb.com/Schema/Enterprise/LCSM" schemaLocation="../../../../../target/common-schema/schema/LCSM/LCSM.xsd"/>
+
+      <xsd:import namespace="http://LIB_SIM_ProductSalesReferenceDataManager/Messages" schemaLocation="../Messages/AdministerProductSelectionRequest.xsd"/>
+      <xsd:import namespace="http://LIB_SIM_ProductSalesReferenceDataManager/Messages" schemaLocation="../Messages/AdministerProductSelectionResponse.xsd"/>
+      <xsd:element name="administerProductSelection">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="request" nillable="true" type="bons1:AdministerProductSelectionRequest"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="administerProductSelectionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="response" nillable="true" type="bons1:AdministerProductSelectionResponse"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ResourceNotAvailableError_element" nillable="true" type="bons0:ResourceNotAvailableError"/>
+            <xsd:element name="InternalServiceError_element" nillable="true" type="bons0:InternalServiceError"/>
+            <xsd:element name="DatabaseServiceError_element" nillable="true" type="bons0:DatabaseServiceError"/>
+        </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="administerProductSelectionRequestMsg">
+    <wsdl:part element="tns:administerProductSelection" name="administerProductSelectionParameters"/>
+  </wsdl:message>
+  <wsdl:message name="administerProductSelectionResponseMsg">
+    <wsdl:part element="tns:administerProductSelectionResponse" name="administerProductSelectionResult"/>
+  </wsdl:message>
+  <wsdl:message name="administerProductSelection_internalServiceErrorMsg">
+    <wsdl:part element="tns:InternalServiceError_element" name="internalServiceError"/>
+  </wsdl:message>
+    <wsdl:message name="administerProductSelection_resourceNotAvailableErrorMsg">
+    <wsdl:part element="tns:ResourceNotAvailableError_element" name="resourceNotAvailableError"/>
+  </wsdl:message>
+    <wsdl:message name="administerProductSelection_dataNotAvailableErrorMsg">
+    <wsdl:part element="tns:DatabaseServiceError_element" name="dataNotAvailableError"/>
+  </wsdl:message>
+    <wsdl:portType name="ID_DetermineProductEligibilityType">
+    <wsdl:operation name="administerProductSelection">
+      <wsdl:input message="tns:administerProductSelectionRequestMsg" name="administerProductSelectionRequest"/>
+      <wsdl:output message="tns:administerProductSelectionResponseMsg" name="administerProductSelectionResponse"/>
+      <wsdl:fault message="tns:administerProductSelection_internalServiceErrorMsg" name="internalServiceError"/>
+      <wsdl:fault message="tns:administerProductSelection_resourceNotAvailableErrorMsg" name="resourceNotAvailableError"/>
+      <wsdl:fault message="tns:administerProductSelection_dataNotAvailableErrorMsg" name="dataNotAvailableError"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

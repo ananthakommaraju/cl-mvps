@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <artifactId>opapca</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <artifactId>opapca-api</artifactId>
+    <name>Salsa::Opapca::opapca-api</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>opapca-schema</module>
+        <module>opapca-jaxrpc-api</module>
+        <module>opapca-jaxws-api</module>
+    </modules>
+</project>

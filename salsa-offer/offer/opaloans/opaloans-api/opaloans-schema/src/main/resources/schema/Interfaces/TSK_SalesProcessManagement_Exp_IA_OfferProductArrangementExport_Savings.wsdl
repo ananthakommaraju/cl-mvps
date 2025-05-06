@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="Exp_IA_OfferProductArrangementExport_Savings_IA_OfferProductArrangementHttp_Service" targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_OfferProductArrangement/Binding2" xmlns:Port_0="http://LIB_SIM_SalesProcessManagement/IA_OfferProductArrangement" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:this="http://LIB_SIM_SalesProcessManagement/IA_OfferProductArrangement/Binding2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import location="IA_OfferProductArrangement.wsdl" namespace="http://LIB_SIM_SalesProcessManagement/IA_OfferProductArrangement"/>
+  <wsdl:binding name="Exp_IA_OfferProductArrangementExport_Savings_IA_OfferProductArrangementHttpBinding" type="Port_0:IA_OfferProductArrangement">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="offerProductArrangement">
+      <soap:operation soapAction="http://www.lloydstsb.com/Schema/Enterprise/offerProductArrangement"/>
+      <wsdl:input name="offerProductArrangementRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="offerProductArrangementResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="internalServiceError">
+        <soap:fault name="internalServiceError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="externalServiceError">
+        <soap:fault name="externalServiceError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="externalBusinessError">
+        <soap:fault name="externalBusinessError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="resourceNotAvailableError">
+        <soap:fault name="resourceNotAvailableError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="dataNotAvailableError">
+        <soap:fault name="dataNotAvailableError" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TSK_SalesProcessManagement_Exp_IA_OfferProductArrangementExport_Savings">
+    <wsdl:port binding="this:Exp_IA_OfferProductArrangementExport_Savings_IA_OfferProductArrangementHttpBinding" name="Exp_IA_OfferProductArrangementExport_Savings_IA_OfferProductArrangementHttpPort">
+      <soap:address location="http://localhost:9080/TSK_SalesProcessManagementWeb/sca/Exp_IA_OfferProductArrangementExport_Savings"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

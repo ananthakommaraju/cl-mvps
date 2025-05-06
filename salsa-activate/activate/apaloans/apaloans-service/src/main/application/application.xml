@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>APALOANS EAR</display-name>
+    <module id="APALOANSSalsaModule">
+        <web>
+            <web-uri>apaloans.war</web-uri>
+            <context-root>sales/activate/v1_0/activateProductArrangementLoans</context-root>
+        </web>
+    </module>
+</application>

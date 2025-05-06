@@ -1,0 +1,73 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf-camel="http://camel.apache.org/schema/cxf"
+       xmlns:cxf-http-conf="http://cxf.apache.org/transports/http/configuration"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+            http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <!--
+     For CXF endpoint definitions made like this, the address attribute is host/port-relative.Cf
+     http://qnalist.com/questions/2220245/cxf-endpoint-no-service-was-found-issue.
+
+      The serviceName attribute is required, even though it's specified in the WSDL.  And because you can't
+      currently include namespace definitions in this attribute, e.g. "http:{bla}serviceName", you need to declare
+      the namespace by an xmlns: declaration.
+    -->
+    <cxf-camel:cxfEndpoint xmlns:s="http://LIB_SIM_SalesProcessManagement/IA_OfferProductArrangement/Binding2" id="offerProductArrangementsavingEndpoint"
+                           address="/service"
+                           serviceClass="lib_sim_salesprocessmanagement.ia_offerproductarrangement.IAOfferProductArrangement"
+                           serviceName="s:TSK_SalesProcessManagement_Exp_IA_OfferProductArrangementExport_Savings">
+
+        <cxf-camel:properties>
+            <entry key="faultStackTraceEnabled" value="true" />
+        </cxf-camel:properties>
+
+        <cxf-camel:features>
+            <bean class="org.apache.cxf.feature.StaxTransformFeature">
+                <!-- Real clients may send messages which namespace the request element wrongly. -->
+                <property name="inTransformElements">
+                    <map>
+                        <entry key="{http://LB_GBO_Sales/Messages}request" value="request"/>
+                    </map>
+                </property>
+                <property name="outAppendElements">
+                    <map>
+                        <entry key="{http://schemas.xmlsoap.org/soap/envelope/}Body"
+                               value="{http://schemas.xmlsoap.org/soap/envelope/}Header="/>
+                    </map>
+                </property>
+            </bean>
+        </cxf-camel:features>
+        <cxf-camel:inInterceptors>
+            <ref bean="opaCxfLoggingInInterceptor"/>
+        </cxf-camel:inInterceptors>
+        <cxf-camel:outInterceptors>
+            <ref bean="opaCxfLoggingOutInterceptor"/>
+        </cxf-camel:outInterceptors>
+        <cxf-camel:outFaultInterceptors>
+            <bean class="com.lloydsbanking.salsa.interceptors.fault.CxfFaultOutInterceptor"/>
+        </cxf-camel:outFaultInterceptors>
+    </cxf-camel:cxfEndpoint>
+
+
+    <bean id="opaCxfLoggingInInterceptor"
+          class="com.lloydsbanking.salsa.logging.interceptor.ServiceCxfLoggingInInterceptor">
+        <constructor-arg ref="cxfLoggingInInterceptor"/>
+    </bean>
+
+    <bean id="opaCxfLoggingOutInterceptor"
+          class="com.lloydsbanking.salsa.logging.interceptor.ServiceCxfLoggingOutInterceptor">
+        <constructor-arg ref="cxfLoggingOutInterceptor"/>
+    </bean>
+    <!--
+              When running in WAS, Salsa apps have their SSL connection properties configured by the container.  In order for this
+              configuration to be picked up, CXF has to be configured to use the Java default (mechanism for deriving an) SSLFactory.
+            -->
+    <cxf-http-conf:conduit name="*.http-conduit">
+        <cxf-http-conf:tlsClientParameters disableCNCheck="true" useHttpsURLConnectionDefaultSslSocketFactory="true"/>
+    </cxf-http-conf:conduit>
+</beans>

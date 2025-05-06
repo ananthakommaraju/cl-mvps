@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>APS EAR</display-name>
+    <module id="ApsSalsaModule">
+        <web>
+            <web-uri>aps.war</web-uri>
+            <context-root>sales/administerproductselection/v1_0</context-root>
+        </web>
+    </module>
+</application>

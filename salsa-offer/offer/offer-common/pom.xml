@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <artifactId>offer</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <groupId>com.lloydsbanking.salsa</groupId>
+    <artifactId>offer-common</artifactId>
+    <name>Salsa::Offer::Offer::offer-common</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>pam-db</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>prd-db</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>ocis-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>asm-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>eidv-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>core-testsupport</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--Api dependency-->
+
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>prd-jaxws-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>eligibility-wz-jaxws-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>common-jaxws-api</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

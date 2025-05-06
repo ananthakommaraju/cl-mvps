@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>APASA EAR</display-name>
+    <module id="APASASalsaModule">
+        <web>
+            <web-uri>apasa.war</web-uri>
+            <context-root>sales/activate/v1_0/activateProductArrangementSA</context-root>
+        </web>
+    </module>
+</application>

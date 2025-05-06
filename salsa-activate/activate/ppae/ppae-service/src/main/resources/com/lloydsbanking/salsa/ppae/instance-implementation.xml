@@ -1,0 +1,138 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+    <!-- Package Scan For Bean Creation-->
+    <context:component-scan base-package="com.lloydsbanking.salsa.ppae"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.activate"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.apapca.service.fulfil"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.apasa.service.fulfil"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.apacc.service.fulfil"/>
+
+
+    <import resource="classpath:/com/lloydsbanking/salsa/ppae/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/offer/offer-common.xml"/>
+
+
+    <!--Defined in the downstream client for PAM DB -->
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-create.xml"/>
+
+
+    <!-- PAM Service -->
+    <bean id="updatePamService" class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamService"/>
+    <bean id="retrievePamService" class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"/>
+    <bean id="updatePamServiceForActivateFSA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateFSA"/>
+    <bean id="updatePamServiceForActivateDA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateDA"/>
+
+
+    <!-- Header Related Entries -->
+    <bean id="bapiHeaderToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.application.converter.BapiHeaderToStHeaderConverter"/>
+    <bean id="bapiHeaderToStHeaderConverterSystem"
+          class="com.lloydsbanking.salsa.downstream.fsystem.convert.BapiHeaderToStHeaderConverter"/>
+    <bean id="bapiHeaderToStHeaderConverterAccount"
+          class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"/>
+    <bean id="requestToResponseHeaderConverter"
+          class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"></bean>
+    <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"></bean>
+    <bean id="headerGenerator" class="com.lloydsbanking.salsa.header.generator.HeaderGenerator"/>
+
+
+    <!-- PRD and Offer Service Bean Entries -->
+    <bean id="applyServiceCc" class="com.lloydsbanking.salsa.offer.apply.downstream.ApplyServiceCC"/>
+    <bean id="applyService" class="com.lloydsbanking.salsa.offer.apply.ApplyService"/>
+    <bean id="applicationStatusEvaluator"
+          class="com.lloydsbanking.salsa.offer.apply.evaluate.ApplicationStatusEvaluator"/>
+    <bean id="lookupDataRetriever" class="com.lloydsbanking.salsa.offer.pam.LookupDataRetriever"/>
+    <bean id="ineligibleProductsEvaluator"
+          class="com.lloydsbanking.salsa.offer.apply.evaluate.IneligibleProductsEvaluator"/>
+    <bean id="creditDecisionRetriever"
+          class="com.lloydsbanking.salsa.offer.apply.downstream.CreditDecisionRetriever"/>
+    <bean id="f424RequestFactory"
+          class="com.lloydsbanking.salsa.offer.apply.convert.RetrieveCreditDecisionRequestFactory"/>
+    <bean id="eligibilityRetriever" class="com.lloydsbanking.salsa.offer.downstream.EligibilityRetriever"/>
+    <bean id="offerToRpcRequestConverterForCreditCard"
+          class="com.lloydsbanking.salsa.offer.apply.convert.OfferToRpcRequestConverterForCreditCard"/>
+    <bean id="administerProductService"
+          class="com.lloydsbanking.salsa.offer.apply.downstream.AdministerProductService"/>
+    <bean id="administerProductSelectionService"
+          class="com.lloydsbanking.salsa.downstream.prd.service.AdministerProductSelectionService"/>
+    <bean id="exceptionUtilityAdmin" class="com.lloydsbanking.salsa.downstream.prd.exception.ExceptionUtility"/>
+
+    <!-- PPAE Related Entries -->
+    <task:annotation-driven scheduler="pendingApplicationScheduler"/>
+    <task:scheduler id="pendingApplicationScheduler" pool-size="1"/>
+    <bean id="pendingApplicationSchedulerBean"
+          class="com.lloydsbanking.salsa.ppae.service.scheduler.PendingApplicationScheduler"/>
+
+    <task:scheduled-tasks scheduler="pendingApplicationScheduler">
+        <task:scheduled ref="pendingApplicationSchedulerBean" method="retrieveEventStores"
+                        fixed-rate="${event.scheduler.rate:10000}"/>
+    </task:scheduled-tasks>
+
+    <bean id="eidvRetriever"
+          class="com.lloydsbanking.salsa.offer.verify.downstream.EidvRetriever">
+        <property name="x711ClientMap">
+            <util:map id="x711ClientMap">
+                <entry key="LTB" value-ref="x711ClientLtb"/>
+                <entry key="HLX" value-ref="x711ClientHlx"/>
+                <entry key="BOS" value-ref="x711ClientBos"/>
+                <entry key="VER" value-ref="x711ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="amendRollOverAccount"
+          class="com.lloydsbanking.salsa.apasa.service.fulfil.downstream.AmendRollOverAccount">
+        <property name="cbsE502ClientMap">
+            <util:map id="cbsE502ClientMap">
+                <entry key="LTB" value-ref="e502ClientLtb"/>
+                <entry key="HLX" value-ref="e502ClientHlx"/>
+                <entry key="BOS" value-ref="e502ClientBos"/>
+                <entry key="VER" value-ref="e502ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="createStandingOrder"
+          class="com.lloydsbanking.salsa.apasa.service.fulfil.downstream.CreateStandingOrder">
+        <property name="cbsE032ClientMap">
+            <util:map id="cbsE032ClientMap">
+                <entry key="LTB" value-ref="e032ClientLtb"/>
+                <entry key="HLX" value-ref="e032ClientHlx"/>
+                <entry key="BOS" value-ref="e032ClientBos"/>
+                <entry key="VER" value-ref="e032ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="cBSCustDetailsTrialRetriever"
+          class="com.lloydsbanking.salsa.apapca.service.fulfil.downstream.CBSCustDetailsTrialRetriever">
+        <property name="cbsE226ClientMap">
+            <util:map id="cbsE226ClientMap">
+                <entry key="LTB" value-ref="e226ClientLtb"/>
+                <entry key="HLX" value-ref="e226ClientHlx"/>
+                <entry key="BOS" value-ref="e226ClientBos"/>
+                <entry key="VER" value-ref="e226ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"/>
+
+    <bean id="structuredAddressFactory" class="com.lloydsbanking.salsa.activate.converter.StructuredAddressFactory"/>
+    <bean id="unstructuredAddressFactory"
+          class="com.lloydsbanking.salsa.activate.converter.UnstructuredAddressFactory"/>
+    <bean id="headerConverter" class="com.lloydsbanking.salsa.downstream.loan.convert.BapiHeaderToStHeaderConverter"/>
+
+
+</beans>

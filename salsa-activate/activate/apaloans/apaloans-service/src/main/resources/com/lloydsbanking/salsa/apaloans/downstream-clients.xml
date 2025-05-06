@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <tx:annotation-driven/>
+    <jee:jndi-lookup id="ibPamConnectionPool" jndi-name="jdbc/ibPamData"/>
+
+    <import resource="classpath:/com/lloydsbanking/salsa/logging/application/application-logging.xml"/>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ibPamEntityManagerFactory"/>
+    </bean>
+
+    <bean id="x741Client" class="com.lloydsbanking.salsa.downstream.tms.client.x741.X741ClientImpl">
+        <constructor-arg value="${tms.x741.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.serviceplatform.tms.TMSRApplicationServicesService"/>
+        </constructor-arg>
+        <constructor-arg value="${tms.x741.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="ibPamHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+        <property name="databasePlatform"
+                  value="${ibPamData.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+    </bean>
+
+    <bean id="ibPamEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.pam.model"/>
+        <property name="jpaVendorAdapter" ref="ibPamHibernateJpaAdapter"/>
+        <property name="dataSource" ref="ibPamConnectionPool"/>
+    </bean>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.pam.jdbc"
+                      entity-manager-factory-ref="ibPamEntityManagerFactory" />
+
+    <bean id="switchService" class="com.lloydsbanking.salsa.downstream.switches.SwitchServiceImpl"/>
+    <jee:jndi-lookup id="switchesConnectionPool" jndi-name="jdbc/switches"/>
+
+    <bean id="switchesTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="switchesEntityManagerFactory"/>
+    </bean>
+
+    <bean id="switchesHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="false"/>
+        <property name="databasePlatform" value="${switches.database.hibernate.dialect:org.hibernate.dialect.DB2Dialect}"/>
+    </bean>
+
+    <bean id="switchesEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.switches.model"/>
+        <property name="jpaVendorAdapter" ref="switchesHibernateJpaAdapter"/>
+        <property name="dataSource" ref="switchesConnectionPool"/>
+    </bean>
+
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.switches.jdbc" entity-manager-factory-ref="switchesEntityManagerFactory"
+                      transaction-manager-ref="switchesTransactionManager"/>
+
+    <bean class="com.lloydsbanking.salsa.aop.CallLoggingAndTimingAutoProxyCreator">
+        <constructor-arg>
+            <list>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="referenceDataLookUpDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.pam.jdbc.ReferenceDataLookUpDao" c:prefix="PAM-LookUp"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="x741Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.tms.client.x741.X741Client"
+                      c:prefix="TMS-X741"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

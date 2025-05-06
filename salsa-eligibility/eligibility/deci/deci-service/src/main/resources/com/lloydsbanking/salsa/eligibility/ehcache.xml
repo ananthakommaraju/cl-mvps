@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false" monitoring="autodetect" name="deci_cache">
+    <!--
+     | Please see http://ehcache.sourceforge.net/documentation/configuration.html for
+     | detailed information on how to configurigure caches in this file
+     +-->
+    <defaultCache eternal="false" maxElementsInMemory="1000"
+                  overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+                  timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" statistics="true"/>
+    <!-- caching for GRD -->
+    <cache name="findByParInsMnemonicAndChannelCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+    <cache name="findOneInstructionHierarchyIdCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+    <cache name="findOneInstructionLookupIdCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+    <cache name="getRefInstructionRulesByInsMnemonicAndChannelCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+    <cache name="getChannelFromContactPointIdCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+    <cache name="findByChannelAndGroupCdInCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- caching for API's -->
+    <cache name="getAccountEventsCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="callRetrieveCBSAppGroupCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getCbsIndicatorCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getChannelSpecificArrangementsCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getKycStatusCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getProductHoldingsCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getShadowLimitCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getStrictFlagCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getCustomerDecisionDetailsCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getCheckBalanceCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="20"
+           memoryStoreEvictionPolicy="LRU"/>
+
+
+    <!-- caching for PRD -->
+    <cache name="findByParentMnemonicAndBrandCodeCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByParInsMnemonicAndBraCodeCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByInsMnemonicAndBraCodeCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByExtSysIdAndProdIdAndBrandCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="getRefInstructionRulesByInsMnemonicAndBracodeCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByInstructionLookupIdProdIdAndInstructionLookupIdBrandCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByInstructionLookupIdProdId" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="findByInstructionLookupIdExtSysIdAndInstructionLookupIdProdId" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- caching for Pam-->
+    <cache name="referenceDataLookUpCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <!--caching for Switches -->
+    <cache name="switchCache" eternal="false"
+           maxElementsInMemory="500" overflowToDisk="false" diskPersistent="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LRU"/>
+
+
+</ehcache>

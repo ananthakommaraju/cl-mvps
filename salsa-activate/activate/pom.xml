@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>salsa-activate</artifactId>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>activate</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Salsa::Activat1e</name>
+
+    <modules>
+        <module>apapca</module>
+        <module>activate-common</module>
+        <module>apacc</module>
+        <module>apasa</module>
+        <module>apaloans</module>
+        <module>ppae</module>
+</modules>
+
+
+</project>

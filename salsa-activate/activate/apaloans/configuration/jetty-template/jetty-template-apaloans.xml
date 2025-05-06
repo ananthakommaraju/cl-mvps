@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+        <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+    <Get name="threadPool">
+        <Set name="maxThreads">500</Set>
+    </Get>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPamData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPamData.database.driver.class}</Set>
+                <Set name="url">${ibPamData.database.connectionstring}</Set>
+                <Set name="username">${ibPamData.database.username}</Set>
+                <Set name="password">${ibPamData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPamData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/switches</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${switches.database.driver.class}</Set>
+                <Set name="url">${switches.database.connectionstring}</Set>
+                <Set name="username">${switches.database.username}</Set>
+                <Set name="password">${switches.database.password}</Set>
+
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${switches.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.account.service.url</Arg>
+        <Arg type="java.lang.String">${fs.account.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>salsa.fs.boxid</Arg>
+        <Arg type="java.lang.Integer">${salsa.fs.boxid}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>tms.x741.service.url</Arg>
+        <Arg type="java.lang.String">${tms.x741.service.url}</Arg>
+    </New>
+</Configure>

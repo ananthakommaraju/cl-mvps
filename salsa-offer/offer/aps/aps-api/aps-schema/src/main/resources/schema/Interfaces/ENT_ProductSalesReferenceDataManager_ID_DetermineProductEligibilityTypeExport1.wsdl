@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="ID_DetermineProductEligibilityTypeExport1_ID_DetermineProductEligibilityTypeHttp_Service" targetNamespace="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType/Binding" xmlns:Port_0="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:this="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType/Binding" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import location="ID_DetermineProductEligibilityType.wsdl" namespace="http://LIB_SIM_ProductSalesReferenceDataManager/ID_DetermineProductEligibilityType"/>
+  <wsdl:binding name="ID_DetermineProductEligibilityTypeExport1_ID_DetermineProductEligibilityTypeHttpBinding" type="Port_0:ID_DetermineProductEligibilityType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="administerProductSelection">
+      <soap:operation soapAction="http://www.lloydstsb.com/Schema/Enterprise/administerProductSelection"/>
+      <wsdl:input name="administerProductSelectionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="administerProductSelectionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="internalServiceError">
+        <soap:fault name="internalServiceError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="resourceNotAvailableError">
+        <soap:fault name="resourceNotAvailableError" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="dataNotAvailableError">
+        <soap:fault name="dataNotAvailableError" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ID_DetermineProductEligibilityTypeExport1_ID_DetermineProductEligibilityTypeHttpService">
+    <wsdl:port binding="this:ID_DetermineProductEligibilityTypeExport1_ID_DetermineProductEligibilityTypeHttpBinding" name="ID_DetermineProductEligibilityTypeExport1_ID_DetermineProductEligibilityTypeHttpPort">
+      <soap:address location="http://localhost:9080/ENT_ProductSalesReferenceDataManagerWeb/sca/ID_DetermineProductEligibilityTypeExport1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

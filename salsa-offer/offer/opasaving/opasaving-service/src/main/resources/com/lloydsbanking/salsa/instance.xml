@@ -1,0 +1,9 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <import resource="classpath:/com/lloydsbanking/salsa/opasaving/management.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/opasaving/cxf.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/opasaving/camel.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/opasaving/instance-implementation.xml"/>
+</beans>

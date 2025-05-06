@@ -1,0 +1,39 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.apacc"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.activate">
+        <context:exclude-filter type="regex"
+                                expression="com.lloydsbanking.salsa.activate.postfulfil.AsyncProcessFulfilmentActivitiesCaller.*"/>
+    </context:component-scan>
+
+    <import resource="classpath:/com/lloydsbanking/salsa/apacc/downstream-clients.xml"/>
+    <!--These are defined in the downstream client for PAM DB -->
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-create.xml"/>
+
+
+    <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"/>
+    <bean id="bapiHeaderToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.application.converter.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverterSystem"
+          class="com.lloydsbanking.salsa.downstream.fsystem.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverterAccount"
+          class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="requestToResponseHeaderConverter"
+          class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"/>
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"/>
+    <bean id="retrievePamService" class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"/>
+    <bean id="updatePamService" class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamService"/>
+
+    <bean id="updatePamServiceForActivateFSA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateFSA"/>
+
+    <bean id="updatePamServiceForActivateDA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateDA"/>
+</beans>

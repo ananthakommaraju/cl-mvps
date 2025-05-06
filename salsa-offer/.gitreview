@@ -1,0 +1,5 @@
+[gerrit]
+host=digital-gerrit.service.test.group
+port=29418
+project=salsa/offer
+defaultbranch=master

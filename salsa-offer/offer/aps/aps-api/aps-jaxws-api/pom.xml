@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>aps-api</artifactId>
+        <groupId>com.lloydsbanking.salsa</groupId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>aps-jaxws-api</artifactId>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <salsa.infrastructure.version>1.11.0-SNAPSHOT</salsa.infrastructure.version>
+        <salsa.annotations.version>0.0.2</salsa.annotations.version>
+
+        <generated-java-root>${basedir}/target/generated</generated-java-root>
+        <!-- Following property used only in XmlSeeAlso annotation for jax-ws contexts-->
+        <object-factories-for-xsd-any-types>com.lloydstsb.schema.enterprise.lcsm.ObjectFactory.class,com.lloydstsb.schema.infrastructure.ObjectFactory.class,com.lloydstsb.schema.infrastructure.soap.ObjectFactory.class,org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext_1_0.ObjectFactory.class</object-factories-for-xsd-any-types>
+        <jaxb-bindings-file>
+            ${basedir}/src/main/resources/bindings/jaxb-bindings-wsdl.xml
+        </jaxb-bindings-file>
+        <cxf.version>2.7.11</cxf.version>
+        <commons.logging.version>1.1.3</commons.logging.version>
+        <jaxb2_commons.version>0.6.5</jaxb2_commons.version>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <additionalJvmArgs>-Dfile.encoding=UTF8</additionalJvmArgs>
+                            <sourceRoot>${generated-java-root}</sourceRoot>
+                            <defaultOptions>
+                                <extraargs>
+                                    <extraarg>-xjc-b,${jaxb-bindings-file}</extraarg>
+                                    <extraarg>-xjc-XhashCode</extraarg>
+                                    <extraarg>-xjc-Xequals</extraarg>
+                                    <extraarg>-xjc-XtoString</extraarg>
+                                    <extraarg>-client</extraarg>
+                                    <extraarg>-wsdlLocation</extraarg>
+                                    <wsdlurl/>
+                                    <!-- Don't regenerate, but still refer to, Java generated in common-jaxws-api. -->
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://www.lloydstsb.com/Schema/Enterprise/LCSM=com.lloydstsb.schema.enterprise.lcsm</extraarg>
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://www.lloydstsb.com/Schema/Infrastructure=com.lloydstsb.schema.infrastructure</extraarg>
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://www.lloydstsb.com/Schema/Infrastructure/SOAP=com.lloydstsb.schema.infrastructure.soap</extraarg>
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd=org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext_1_0</extraarg>
+                                </extraargs>
+                            </defaultOptions>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/../aps-schema/src/main/resources/schema/Interfaces/ENT_ProductSalesReferenceDataManager_ID_DetermineProductEligibilityTypeExport1.wsdl
+                                    </wsdl>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <!-- required by XJC args above -->
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics</artifactId>
+                        <version>${jaxb2_commons.version}</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>commons-logging</groupId>
+                                <artifactId>commons-logging</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!--
+                Generates Java classes from types in XSDs which are sent across the wire but not explicitly referred to
+                in the WSDL graph.
+
+                Warning: the build isn't failed even if schema can't be found or can't be processed.
+            -->
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                        <version>${commons.logging.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <!-- Ensure generated source files are regarded as source by the IDE -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9</version>
+                <executions>
+                    <execution>
+                        <id>add-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${generated-java-root}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.3.1</version>
+                <configuration>
+                    <rules>
+                        <DependencyConvergence/>
+                    </rules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics</artifactId>
+            <version>${jaxb2_commons.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>common-jaxws-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lloydsbanking.salsa</groupId>
+            <artifactId>aps-schema</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

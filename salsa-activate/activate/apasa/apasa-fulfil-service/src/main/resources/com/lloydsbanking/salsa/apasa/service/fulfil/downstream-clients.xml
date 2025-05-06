@@ -1,0 +1,77 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+    <bean id="e502ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502ClientImpl">
+        <constructor-arg value="${cbs.e502.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E502ChaCBSAmdRolOverAc_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e502.ltb.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e502ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502ClientImpl">
+        <constructor-arg value="${cbs.e502.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E502ChaCBSAmdRolOverAc_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e502.ver.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e502ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502ClientImpl">
+        <constructor-arg value="${cbs.e502.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E502ChaCBSAmdRolOverAc_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e502.bos.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e502ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e502.E502ClientImpl">
+        <constructor-arg value="${cbs.e502.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E502ChaCBSAmdRolOverAc_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e502.hlx.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e032ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032ClientImpl">
+        <constructor-arg value="${cbs.e032.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E032AddCBSSO_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e032.ltb.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e032ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032ClientImpl">
+        <constructor-arg value="${cbs.e032.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E032AddCBSSO_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e032.ver.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e032ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032ClientImpl">
+        <constructor-arg value="${cbs.e032.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E032AddCBSSO_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e032.bos.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e032ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e032.E032ClientImpl">
+        <constructor-arg value="${cbs.e032.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E032AddCBSSO_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e032.hlx.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+</beans>

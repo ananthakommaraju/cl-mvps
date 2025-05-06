@@ -1,0 +1,163 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <import resource="classpath:/com/lloydsbanking/salsa/logging/application/application-logging.xml"/>
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="6"/>
+        <property name="maxPoolSize" value="12"/>
+        <property name="WaitForTasksToCompleteOnShutdown" value="true"/>
+    </bean>
+
+    <bean id="prdClient" class="com.lloydsbanking.salsa.activate.downstream.PrdClient">
+        <constructor-arg value="${rpc.service.url}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="sendCommunicationClient"
+          class="com.lloydsbanking.salsa.downstream.cm.client.SendCommunicationClient">
+        <constructor-arg value="${sendcommunication.service.url}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="scheduleCommunicationClient"
+          class="com.lloydsbanking.salsa.downstream.cm.client.ScheduleCommunicationClient">
+        <constructor-arg value="${schedulecommunication.service.url}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="encryptClient" class="com.lloydsbanking.salsa.downstream.dp.client.encrypt.EncryptClientImpl">
+        <constructor-arg value="${dp.encrypt.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.internetbanking.encryptdata.DataEncryptService_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${dp.encrypt.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f061Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f061.F061ClientImpl">
+        <constructor-arg value="${ocis.f061.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.F061EnqPtyDetails_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f061.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f062Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f062.F062ClientImpl">
+        <constructor-arg value="${ocis.f062.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.F062AddPtyDetails_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f062.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f060Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f060.F060ClientImpl">
+        <constructor-arg value="${ocis.f060.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.F060AddCommsPref_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f060.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="soaIpmClient" class="com.lloydsbanking.salsa.downstream.soaipm.client.involvedpartymanager.IPMClientImpl">
+        <constructor-arg value="${soa.ipm.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.involvedpartymanagement.ifw.InvolvedPartyManagementService"/>
+        </constructor-arg>
+        <constructor-arg value="${soa.ipm.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="soaDocumentManagerClient" class="com.lloydsbanking.salsa.downstream.soadms.client.documentmanager.SOADocumentManagerClientImpl">
+        <constructor-arg value="${soa.dms.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.documentmanagement.ifw.DocumentationManagerService"/>
+        </constructor-arg>
+        <constructor-arg value="${soa.dms.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="csaClient" class="com.lloydsbanking.salsa.downstream.soa.servicearrangement.client.CSAClientImpl">
+        <constructor-arg value="${soa.sas.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.servicearrangementsetupservice.ifw.ServiceArrangementSetupService"/>
+        </constructor-arg>
+        <constructor-arg value="${soa.sas.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c241Client" class="com.lloydsbanking.salsa.downstream.ocis.client.c241.C241ClientImpl">
+        <constructor-arg value="${ocis.c241.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.C241AddPartyRelat_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.c241.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c658Client" class="com.lloydsbanking.salsa.downstream.ocis.client.c658.C658ClientImpl">
+        <constructor-arg value="${ocis.c658.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.C658ChaPtyTelecom_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.c658.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="c234Client" class="com.lloydsbanking.salsa.downstream.ocis.client.c234.C234ClientImpl">
+        <constructor-arg value="${ocis.c234.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.C234ChaPersPty_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.c234.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="accountClient" class="com.lloydsbanking.salsa.downstream.account.client.AccountClientImpl">
+        <constructor-arg value="${fs.account.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.account.Account"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.account.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="applicationClient" class="com.lloydsbanking.salsa.downstream.application.client.ApplicationClientImpl">
+        <constructor-arg value="${fs.application.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.application.Application"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.application.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="siraClient" class="com.lloydsbanking.salsa.downstream.sira.client.SiraClientImpl">
+        <constructor-arg value="${sira.service.url}"/>
+        <constructor-arg>
+            <bean class="com.synectics_solutions.ws.webservices.dataservices.v2.servicesaccess.ServicesAccess"/>
+        </constructor-arg>
+        <constructor-arg value="${sira.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+    <bean id="x741Client" class="com.lloydsbanking.salsa.downstream.tms.client.x741.X741ClientImpl">
+        <constructor-arg value="${tms.x741.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.serviceplatform.tms.TMSRApplicationServicesService"/>
+        </constructor-arg>
+        <constructor-arg value="${tms.x741.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="f425Client" class="com.lloydsbanking.salsa.downstream.asm.client.f425.F425ClientImpl">
+        <constructor-arg value="${asm.f425.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.crossproductmanufacturing.asm.F425FunEnqDcsnReq_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${asm.f425.service.url.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+</beans>

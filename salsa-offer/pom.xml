@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <groupId>com.lloydsbanking.salsa</groupId>
+    <artifactId>salsa-offer</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <name>Salsa::Offer</name>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://digital-nexus.service.test.group/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://digital-nexus.service.test.group/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:https://digital-gerrit.service.test.group:29418/salsa/offer</connection>
+    </scm>
+
+    <modules>
+        <module>offer</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+
+        <salsa.annotations.version>0.0.2</salsa.annotations.version>
+
+        <sonar.exclusions>file:**/generated*/**,file:**/remotemock/**,file:**/model/**</sonar.exclusions>
+        <sonar.host.url>https://digital-sonar.service.test.group/sonar/</sonar.host.url>
+        <sonar.analysis.mode>preview</sonar.analysis.mode>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.profile>Salsa_Quality_Profile</sonar.profile>
+        <sonar.qualitygate>Salsa_Quality_Profile</sonar.qualitygate>
+        <sonar.issuesReport.console.enable>true</sonar.issuesReport.console.enable>
+        <sonar.issuesReport.html.enable>true</sonar.issuesReport.html.enable>
+        <sonar.language>java</sonar.language>
+        <sonar.branch>master</sonar.branch>
+        <sonar.jacoco.reportPath>${project.basedir}/target/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
+        <sonar.jacoco.itReportPath>${project.basedir}/target/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
+        <jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
+
+        <!-- See dependencyManagement section for usage of the following property -->
+        <salsa.soap-apis.version>1.5.0-SNAPSHOT</salsa.soap-apis.version>
+        <salsa.core.version>1.10.0-SNAPSHOT</salsa.core.version>
+        <salsa.downstream.version>1.7.0-SNAPSHOT</salsa.downstream.version>
+        <salsa.runtime.version>1.5.0-SNAPSHOT</salsa.runtime.version>
+        <salsa.infrastructure.version>1.11.0-SNAPSHOT</salsa.infrastructure.version>
+        <salsa.remotemock.version>1.7.0-SNAPSHOT</salsa.remotemock.version>
+
+        <!-- Plugins -->
+        <maven.jar.plugin.version>2.5</maven.jar.plugin.version>
+
+        <!-- Dependencies -->
+        <camel.version>2.13.2</camel.version>
+        <commons-lang.version>3.2</commons-lang.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons.logging.version>1.1.3</commons.logging.version>
+        <cxf.version>2.7.11</cxf.version>
+        <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+        <db2.jcc.version>1.0.0-RELEASE</db2.jcc.version>
+        <json.version>20131018</json.version>
+        <log4j.version>1.2.17</log4j.version>
+        <ojdbc.version>10.2.0</ojdbc.version>
+        <slf4j-api.version>1.7.5</slf4j-api.version>
+        <spring.version>4.0.7.RELEASE</spring.version>
+        <spring-data.version>1.7.0.RELEASE</spring-data.version>
+        <!-- This version must depend on spring.version above -->
+        <hibernate.version>3.6.10.Final</hibernate.version>
+        <!-- This must be the right version for spring-data.version above -->
+        <jaxb2_commons.version>0.6.5</jaxb2_commons.version>
+
+        <!-- Deps used only in Maven test fork, or deployed only for testing -->
+        <httpclient.version>4.3</httpclient.version>
+        <h2.version>1.3.174</h2.version>
+        <!-- not test scope as needed for driver for remote mock testing -->
+        <junit.version>4.11</junit.version>
+        <junit.version>4.11</junit.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <mockito-core.version>1.9.5</mockito-core.version>
+        <jbehave.version>3.9.1</jbehave.version>
+        <xmlunit.version>1.5</xmlunit.version>
+        <joda-time.version>2.3</joda-time.version>
+        <tomcat-jdbc.version>7.0.54</tomcat-jdbc.version>
+        <tomcat-juli.version>7.0.54</tomcat-juli.version>
+        <!-- Following determines default test types for 'mvn test' -->
+        <testgroups>com.lloydsbanking.salsa.UnitTest</testgroups>
+        <it.testgroups/>
+        <!-- Failesafe plugin requires this property set, if not set it will not running any tests. Here we are setting to nothing as a default -->
+
+        <generated-java-root>${basedir}/target/generated</generated-java-root>
+        <!-- Following property used only in XmlSeeAlso annotation for jax-ws contexts-->
+        <object-factories-for-xsd-any-types>
+            com.lloydstsb.schema.enterprise.lcsm.ObjectFactory.class,com.lloydstsb.schema.infrastructure.ObjectFactory.class,com.lloydstsb.schema.infrastructure.soap.ObjectFactory.class,org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext_1_0.ObjectFactory.class
+        </object-factories-for-xsd-any-types>
+        <jaxb-bindings-file>
+            ${basedir}/src/main/resources/bindings/jaxb-bindings-wsdl.xml
+        </jaxb-bindings-file>
+        <cxf.version>2.7.11</cxf.version>
+        <commons.logging.version>1.1.3</commons.logging.version>
+        <jaxb2_commons.version>0.6.5</jaxb2_commons.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-codegen-plugin</artifactId>
+                    <version>${cxf.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-sources</id>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <additionalJvmArgs>-Dfile.encoding=UTF8</additionalJvmArgs>
+                                <sourceRoot>${generated-java-root}</sourceRoot>
+                                <defaultOptions>
+                                    <!-- Putting the hashcode and equals generation config in the defaultOptions
+                                         here causes double generation and therefore errors.  Looks like a defect
+                                         in the maven plugin.  -->
+                                </defaultOptions>
+                            </configuration>
+                            <goals>
+                                <goal>wsdl2java</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <!-- required by XJC args above -->
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics</artifactId>
+                            <version>${jaxb2_commons.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>commons-logging</groupId>
+                                    <artifactId>commons-logging</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                    <configuration>
+                        <argLine>-Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=356m -XX:PermSize=256m
+                            -XX:MaxPermSize=512
+                        </argLine>
+                        <groups>${testgroups}</groups>
+                    </configuration>
+                </plugin>
+                <!--
+                               Ant is used to (i) process XmlSeeAlso annotations to ensure that binding contexts include types which are
+                               sent across the wire but not explicitly referred to in the WSDL graph, (ii) delete redundantly generated
+                               Java files whose classes are already present by virtue of Maven dependency on common SOAP classes.
+                           -->
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.17</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                            <configuration>
+                                <includes>
+                                    <include>${failsafe.includes}</include>
+                                </includes>
+                                <!-- This plugin will attempt to run abstract classes for tests. This is because are specifying to include all the classes
+                                      Hence, the exclusion below.-->
+                                <excludes>
+                                    <exclude>**/*TestBase*</exclude>
+                                    <!-- temporarly adding this exclusion to not these bdd scenarios as they are not setup properly yet. -->
+                                </excludes>
+                                <!-- if Analysis profile is active, this plugin is told to include all the tests -->
+                                <argLine>${failsafeArgLine} -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=356m
+                                    -XX:PermSize=256m -XX:MaxPermSize=512
+                                </argLine>
+                                <groups>${it.testgroups}</groups>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.3.2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>java</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includeProjectDependencies>false</includeProjectDependencies>
+                        <includePluginDependencies>true</includePluginDependencies>
+                        <executableDependency>
+                            <groupId>com.lloydsbanking.salsa</groupId>
+                            <artifactId>core-testsupport</artifactId>
+                        </executableDependency>
+                        <mainClass>com.lloydsbanking.salsa.xml.XmlDiff</mainClass>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.lloydsbanking.salsa</groupId>
+                            <artifactId>core-testsupport</artifactId>
+                            <version>${salsa.core.version}</version>
+                            <type>jar</type>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.jvnet.jaxb2.maven2</groupId>
+                    <artifactId>maven-jaxb2-plugin</artifactId>
+                    <version>0.12.3</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>commons-logging</groupId>
+                            <artifactId>commons-logging</artifactId>
+                            <version>${commons.logging.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.3.1</version>
+                    <configuration>
+                        <rules>
+                            <DependencyConvergence/>
+                        </rules>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <!-- Ensure generated source files are regarded as source by the IDE -->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.9</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- salsa service api -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opapca-jaxws-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- salsa service api -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opacc-jaxws-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- salsa service api -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opaloans-jaxws-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <!-- salsa runtime -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>runtime</artifactId>
+                <version>${salsa.runtime.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-servlet_3.0_spec</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- salsa core -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>core-testsupport</artifactId>
+                <version>${salsa.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>offer-common</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>remotemock-control-api</artifactId>
+                <version>${salsa.remotemock.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>prd-jaxws-api</artifactId>
+                <version>${salsa.soap-apis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>eligibility-wz-jaxws-api</artifactId>
+                <version>${salsa.soap-apis.version}</version>
+            </dependency>
+
+            <!--salsa opapca client-->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opapca-client</artifactId>
+                <version>${project.parent.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opasaving-client</artifactId>
+                <version>${project.parent.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--salsa opacc client-->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opacc-client</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>opaloans-client</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>aps-client</artifactId>
+                <version>${project.parent.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>common-jaxws-api</artifactId>
+                <version>${salsa.soap-apis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>common-jaxrpc-api</artifactId>
+                <version>${salsa.soap-apis.version}</version>
+            </dependency>
+
+            <!-- downstream clients dependencies -->
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>pam-db</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>prd-db</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>ocis-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>asm-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>dp-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>fs-loan-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>sira-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>eidv-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>soa-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>switches-fuses</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>account-ifw-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>arrangement-wz-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>cbs-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lloydsbanking.salsa</groupId>
+                <artifactId>ipa-client</artifactId>
+                <version>${salsa.downstream.version}</version>
+            </dependency>
+
+            <!-- third party dependencies -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-cxf</artifactId>
+                <version>${camel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-tx</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.xml.parsers</groupId>
+                        <artifactId>jaxp-ri</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-simple</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-management</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-api</artifactId>
+                <version>${cxf.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-servlet_3.0_spec</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency> <!-- enables mocking of classes (in addition to interfaces) -->
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>2.2.2</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jdbc</artifactId>
+                <version>${tomcat-jdbc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jvnet.jaxb2_commons</groupId>
+                <artifactId>jaxb2-basics</artifactId>
+                <version>${jaxb2_commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <!-- test dependencies -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <!-- not test scope as needed for driver for remote mock testing -->
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>xmlunit</groupId>
+                <artifactId>xmlunit</artifactId>
+                <version>${xmlunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>oracle</groupId>
+                <artifactId>ojdbc7</artifactId>
+                <version>${ojdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ibm.db2</groupId>
+                <artifactId>jcc</artifactId>
+                <version>${db2.jcc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ibm.db2</groupId>
+                <artifactId>jcc-license-cisuz</artifactId>
+                <version>${db2.jcc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ibm.db2</groupId>
+                <artifactId>jcc-license-cu</artifactId>
+                <version>${db2.jcc.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+    <profiles>
+
+        <profile>
+            <id>analysis</id>
+            <properties>
+                <it.testgroups>com.lloydsbanking.salsa.IntegrationTest,
+                    com.lloydsbanking.salsa.InProcessAcceptanceTest
+                </it.testgroups>
+                <failsafe.includes>**/*.java</failsafe.includes>
+                <testgroups>com.lloydsbanking.salsa.UnitTest,com.lloydsbanking.salsa.ComponentTest</testgroups>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.6.3.201306030806</version>
+                        <executions>
+                            <execution>
+                                <id>pre-unit-test</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                                    <propertyName>surefireArgLine</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                                    <propertyName>failsafeArgLine</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <!-- In a sonar run we need to inject the surfireArgLine
+                            If we dont activate analysis profile, surefire will crash as it will not be able to resolve surefireArgLine
+                            Hence this configuration override here -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>2.17</version>
+                            <configuration>
+                                <argLine>${surefireArgLine} -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=356m
+                                    -XX:PermSize=256m -XX:MaxPermSize=512
+                                </argLine>
+                                <groups>${testgroups}</groups>
+                            </configuration>
+                        </plugin>
+
+                    </plugins>
+
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>remotemock</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>get-remotemock-war-file</id>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.lloydsbanking.salsa</groupId>
+                                            <artifactId>remotemock-server</artifactId>
+                                            <version>${salsa.remotemock.version}</version>
+                                            <type>war</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.basedir}/target</outputDirectory>
+                                            <destFileName>remotemock.war</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>get-remotemock-mock-control-api-jar</id>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.lloydsbanking.salsa</groupId>
+                                            <artifactId>remotemock-control-api</artifactId>
+                                            <version>${salsa.remotemock.version}</version>
+                                            <type>jar</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.basedir}/target</outputDirectory>
+                                            <destFileName>remotemock-control-api.jar</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>get-jacoco-agent</id>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jacoco</groupId>
+                                            <artifactId>org.jacoco.agent</artifactId>
+                                            <version>${jacoco-maven-plugin.version}</version>
+                                            <classifier>runtime</classifier>
+                                            <type>jar</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.basedir}/target</outputDirectory>
+                                            <destFileName>jacocoagent.jar</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+</project>

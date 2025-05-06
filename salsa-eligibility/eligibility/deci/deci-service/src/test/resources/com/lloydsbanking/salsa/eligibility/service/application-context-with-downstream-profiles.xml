@@ -1,0 +1,313 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <!--
+        A Spring context configuration file which broadly configures the app as in production, but implements a number of profiles
+        allowing tests to determine the nature of downstream dependencies wired in - real, in-process mocks and remote mocks.
+    -->
+    <import resource="classpath:/com/lloydsbanking/salsa/configuration.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/eligibility/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/logging.xml"/>
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.eligibility.logging"/>
+
+
+    <!-- these are mock control clients for the various SOAP endpoints -->
+    <jaxws:client id="mockControlClient"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlServicePortType"
+                  address="${remotemock.control.url}"/>
+    <jaxws:client id="mockE220Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE220ServicePortType"
+                  address="${remotemock.control.cbs.e220.url}"/>
+
+    <jaxws:client id="mockControlCbsE220"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE220ServicePortType"
+                  address="${remotemock.control.cbs.e220.url}"/>
+
+    <jaxws:client id="mockControlCbsE591"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE591ServicePortType"
+                  address="${remotemock.control.cbs.e591.url}"/>
+
+    <jaxws:client id="mockFsAccountControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlFsAccountServicePortType"
+                  address="${remotemock.control.fs.account.url}"/>
+
+    <jaxws:client id="mockFsUserControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlFsUserServicePortType"
+                  address="${remotemock.control.fs.user.url}"/>
+
+    <jaxws:client id="mockFsSystemControl"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlFsSystemServicePortType"
+                  address="${remotemock.control.fs.system.url}"/>
+
+    <jaxws:client id="mockOcisF336Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF336ServicePortType"
+                  address="${remotemock.control.ocis.f336.url}"/>
+
+    <jaxws:client id="mockOcisF075Control"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlOcisF075ServicePortType"
+                  address="${remotemock.control.ocis.f075.url}"/>
+
+    <jaxws:client id="mockControlCbsE184ServicePortType"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE184ServicePortType"
+                  address="${remotemock.control.cbs.e184.url}"/>
+
+    <jaxws:client id="mockControlCbsE141"
+                  serviceClass="com.lloydsbanking.salsa.remotemock.MockControlCbsE141ServicePortType"
+                  address="${remotemock.control.cbs.e141.url}"/>
+
+    <!-- these are mock control clients for the various SOAP endpoints -->
+    <bean id="eligibilityClient" class="com.lloydsbanking.salsa.eligibility.client.EligibilityClientImpl">
+        <constructor-arg value="${eligibility.service.url}"/>
+        <constructor-arg value="true"/>
+    </bean>
+
+    <bean id="eligibilityClientWZ" class="com.lloydsbanking.salsa.eligibility.client.wz.EligibilityClientImpl">
+        <constructor-arg value="${eligibility.wz.service.url}"/>
+        <constructor-arg value="true"/>
+    </bean>
+
+    <beans profile="remote-mock-downstream,wps-remote-mock-downstream">
+        <!-- don't explicitly mock DAOs or SOAP clients here because the system under test will use
+            the real DAOs and real clients pointing at our external mocked endpoints -->
+        <bean id="mockScenarioHelper" class="com.lloydsbanking.salsa.eligibility.RemoteMockScenarioHelper">
+            <property name="cbsE220ClientMap">
+                <util:map id="cbsE220ClientMap">
+                    <entry key="LTB" value-ref="e220ClientLtb"/>
+                    <entry key="HAL" value-ref="e220ClientHlx"/>
+                    <entry key="BOS" value-ref="e220ClientBos"/>
+                    <entry key="VER" value-ref="e220ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE184ClientMap">
+                <util:map id="cbsE184ClientMap">
+                    <entry key="LTB" value-ref="e184ClientLtb"/>
+                    <entry key="HAL" value-ref="e184ClientHlx"/>
+                    <entry key="BOS" value-ref="e184ClientBos"/>
+                    <entry key="VER" value-ref="e184ClientVer"/>
+                </util:map>
+            </property>
+        </bean>
+
+        <bean id="dataHelper" class="com.lloydsbanking.salsa.eligibility.TestDataHelper"/>
+
+        <bean id="dataHelperWZ" class="com.lloydsbanking.salsa.eligibility.wz.TestDataHelper"/>
+
+        <bean id="gmoToGboRequestHeaderConverter" class="com.lloydsbanking.salsa.eligibility.service.utility.header.GmoToGboRequestHeaderConverter"/>
+
+        <bean id="ibHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+            <property name="databasePlatform"
+                      value="${ibrefdata.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+        </bean>
+
+        <bean id="ibConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${ibrefdata.database.driver.class}"/>
+            <property name="url" value="${ibrefdata.database.connectionstring}"/>
+            <property name="username" value="${ibrefdata.database.username}"/>
+            <property name="password" value="${ibrefdata.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${ibrefdata.database.maxwait}"/>
+        </bean>
+
+        <bean id="tempIbEntityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.ref.model"/>
+            <property name="jpaVendorAdapter" ref="ibHibernateJpaAdapter"/>
+            <property name="dataSource" ref="ibConnectionPool"/>
+        </bean>
+
+        <bean id="switchesHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+            <property name="databasePlatform"
+                      value="${switches.database.hibernate.dialect:org.hibernate.dialect.DB2390Dialect}"/>
+        </bean>
+
+        <bean id="switchesConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${switches.database.driver.class}"/>
+            <property name="url" value="${switches.database.connectionstring}"/>
+            <property name="username" value="${switches.database.username}"/>
+            <property name="password" value="${switches.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${switches.database.maxwait}"/>
+        </bean>
+
+        <bean id="tempSwitchesEntityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.switches.model"/>
+            <property name="jpaVendorAdapter" ref="switchesHibernateJpaAdapter"/>
+            <property name="dataSource" ref="switchesConnectionPool"/>
+        </bean>
+        <bean id="ibPrdHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+        </bean>
+
+        <bean id="ibPrdConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${ibPrdData.database.driver.class}"/>
+            <property name="url" value="${ibPrdData.database.connectionstring}"/>
+            <property name="username" value="${ibPrdData.database.username}"/>
+            <property name="password" value="${ibPrdData.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${ibPrdData.database.maxwait}"/>
+        </bean>
+
+        <bean id="ibPamHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+        </bean>
+
+        <bean id="ibPamConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${ibPamData.database.driver.class}"/>
+            <property name="url" value="${ibPamData.database.connectionstring}"/>
+            <property name="username" value="${ibPamData.database.username}"/>
+            <property name="password" value="${ibPamData.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${ibPamData.database.maxwait}"/>
+        </bean>
+
+        <bean id="ibPrdEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.prd.model"/>
+            <property name="jpaVendorAdapter" ref="ibPrdHibernateJpaAdapter"/>
+            <property name="dataSource" ref="ibPrdConnectionPool"/>
+        </bean>
+
+        <bean id="ibPamEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.pam.model"/>
+            <property name="jpaVendorAdapter" ref="ibPamHibernateJpaAdapter"/>
+            <property name="dataSource" ref="ibPamConnectionPool"/>
+        </bean>
+    </beans>
+
+    <beans profile="remote-mock-downstream">
+        <bean id="mockScenarioHelper" class="com.lloydsbanking.salsa.eligibility.RemoteMockScenarioHelper">
+            <property name="cbsE220ClientMap">
+                <util:map id="cbsE220ClientMap">
+                    <entry key="LTB" value-ref="e220ClientLtb"/>
+                    <entry key="HAL" value-ref="e220ClientHlx"/>
+                    <entry key="BOS" value-ref="e220ClientBos"/>
+                    <entry key="VER" value-ref="e220ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE184ClientMap">
+                <util:map id="cbsE184ClientMap">
+                    <entry key="LTB" value-ref="e184ClientLtb"/>
+                    <entry key="HAL" value-ref="e184ClientHlx"/>
+                    <entry key="BOS" value-ref="e184ClientBos"/>
+                    <entry key="VER" value-ref="e184ClientVer"/>
+                </util:map>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="wps-remote-mock-downstream">
+        <bean id="involvedPartyAuthorisationService"
+              class="com.lloydstsb.schema.enterprise.lcsm_involvedpartymanagement.InvolvedPartyAuthorisationService"/>
+        <bean id="mockScenarioHelper" class="com.lloydsbanking.salsa.eligibility.WpsRemoteMockScenarioHelper">
+            <property name="cbsE220ClientMap">
+                <util:map id="cbsE220ClientMap">
+                    <entry key="LTB" value-ref="e220ClientLtb"/>
+                    <entry key="HAL" value-ref="e220ClientHlx"/>
+                    <entry key="BOS" value-ref="e220ClientBos"/>
+                    <entry key="VER" value-ref="e220ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE184ClientMap">
+                <util:map id="cbsE184ClientMap">
+                    <entry key="LTB" value-ref="e184ClientLtb"/>
+                    <entry key="HAL" value-ref="e184ClientHlx"/>
+                    <entry key="BOS" value-ref="e184ClientBos"/>
+                    <entry key="VER" value-ref="e184ClientVer"/>
+                </util:map>
+            </property>
+        </bean>
+        <bean id="ipaClient" class="com.lloydsbanking.salsa.downstream.ipa.client.IpaClientImpl">
+            <constructor-arg type="java.net.URL" value="${ipa.client.service.url}"/>
+            <constructor-arg ref="involvedPartyAuthorisationService"/>
+        </bean>
+    </beans>
+
+    <beans profile="remote-mock-downstream">
+        <bean id="mockScenarioHelperWZ" class="com.lloydsbanking.salsa.eligibility.wz.RemoteMockScenarioHelper">
+            <property name="cbsE220ClientMap">
+                <util:map id="cbsE220ClientMap">
+                    <entry key="LTB" value-ref="e220ClientLtb"/>
+                    <entry key="HAL" value-ref="e220ClientHlx"/>
+                    <entry key="BOS" value-ref="e220ClientBos"/>
+                    <entry key="VER" value-ref="e220ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE591ClientMap">
+                <util:map id="cbsE591ClientMap">
+                    <entry key="LTB" value-ref="e591ClientLtb"/>
+                    <entry key="HAL" value-ref="e591ClientHlx"/>
+                    <entry key="BOS" value-ref="e591ClientBos"/>
+                    <entry key="VER" value-ref="e591ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE141ClientMap">
+                <util:map id="cbsE141ClientMap">
+                    <entry key="LTB" value-ref="e141ClientLtb"/>
+                    <entry key="HAL" value-ref="e141ClientHlx"/>
+                    <entry key="BOS" value-ref="e141ClientBos"/>
+                    <entry key="VER" value-ref="e141ClientVer"/>
+                </util:map>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="wps-remote-mock-downstream">
+        <bean id="mockScenarioHelperWZ" class="com.lloydsbanking.salsa.eligibility.wz.WpsRemoteMockScenarioHelper">
+            <property name="cbsE220ClientMap">
+                <util:map id="cbsE220ClientMap">
+                    <entry key="LTB" value-ref="e220ClientLtb"/>
+                    <entry key="HAL" value-ref="e220ClientHlx"/>
+                    <entry key="BOS" value-ref="e220ClientBos"/>
+                    <entry key="VER" value-ref="e220ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE591ClientMap">
+                <util:map id="cbsE591ClientMap">
+                    <entry key="LTB" value-ref="e591ClientLtb"/>
+                    <entry key="HAL" value-ref="e591ClientHlx"/>
+                    <entry key="BOS" value-ref="e591ClientBos"/>
+                    <entry key="VER" value-ref="e591ClientVer"/>
+                </util:map>
+            </property>
+            <property name="cbsE141ClientMap">
+                <util:map id="cbsE141ClientMap">
+                    <entry key="LTB" value-ref="e141ClientLtb"/>
+                    <entry key="HAL" value-ref="e141ClientHlx"/>
+                    <entry key="BOS" value-ref="e141ClientBos"/>
+                    <entry key="VER" value-ref="e141ClientVer"/>
+                </util:map>
+            </property>
+        </bean>
+        <bean id="involvedPartyAuthorisationService"
+              class="com.lloydstsb.schema.enterprise.lcsm_involvedpartymanagement.InvolvedPartyAuthorisationService"/>
+        <bean id="ipaClient" class="com.lloydsbanking.salsa.downstream.ipa.client.IpaClientImpl">
+        <constructor-arg type="java.net.URL" value="${ipa.client.service.url}"/>
+        <constructor-arg ref="involvedPartyAuthorisationService"/>
+        </bean>
+    </beans>
+</beans>

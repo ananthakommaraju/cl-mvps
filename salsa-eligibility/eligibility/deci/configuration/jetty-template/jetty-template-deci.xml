@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+    <Get name="threadPool">
+        <Set name="maxThreads">500</Set>
+    </Get>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibRefData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibrefdata.database.driver.class}</Set>
+                <Set name="url">${ibrefdata.database.connectionstring}</Set>
+                <Set name="username">${ibrefdata.database.username}</Set>
+                <Set name="password">${ibrefdata.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibrefdata.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/switches</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${switches.database.driver.class}</Set>
+                <Set name="url">${switches.database.connectionstring}</Set>
+                <Set name="username">${switches.database.username}</Set>
+                <Set name="password">${switches.database.password}</Set>
+
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${switches.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+   <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f075.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f075.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e220.ltb.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e220.ltb.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e220.ver.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e220.ver.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e220.hlx.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e220.hlx.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e220.bos.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e220.bos.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>salsa.fs.boxid</Arg>
+        <Arg type="java.lang.Integer">${salsa.fs.boxid}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.account.service.url</Arg>
+        <Arg type="java.lang.String">${fs.account.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>ocis.f336.service.url</Arg>
+        <Arg type="java.lang.String">${ocis.f336.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.user.service.url</Arg>
+        <Arg type="java.lang.String">${fs.user.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>fs.system.service.url</Arg>
+        <Arg type="java.lang.String">${fs.system.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e184.ltb.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e184.ltb.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e184.ver.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e184.ver.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e184.hlx.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e184.hlx.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e184.bos.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e184.bos.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e591.ltb.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e591.ltb.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e591.ver.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e591.ver.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e591.hlx.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e591.hlx.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e591.bos.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e591.bos.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e141.ltb.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e141.ltb.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e141.ver.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e141.ver.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e141.hlx.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e141.hlx.service.url}</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>cbs.e141.bos.service.url</Arg>
+        <Arg type="java.lang.String">${cbs.e141.bos.service.url}</Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPrdData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPrdData.database.driver.class}</Set>
+                <Set name="url">${ibPrdData.database.connectionstring}</Set>
+                <Set name="username">${ibPrdData.database.username}</Set>
+                <Set name="password">${ibPrdData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPrdData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/ibPamData</Arg>
+        <Arg>
+            <New class="org.apache.tomcat.jdbc.pool.DataSource">
+                <Set name="driverClassName">${ibPamData.database.driver.class}</Set>
+                <Set name="url">${ibPamData.database.connectionstring}</Set>
+                <Set name="username">${ibPamData.database.username}</Set>
+                <Set name="password">${ibPamData.database.password}</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxActive">50</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="minIdle">2</Set>
+                <Set name="maxWait">${ibPamData.database.maxwait}</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>

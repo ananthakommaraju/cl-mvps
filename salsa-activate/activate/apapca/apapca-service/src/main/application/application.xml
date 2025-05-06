@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>APAPCA EAR</display-name>
+    <module id="APAPCASalsaModule">
+        <web>
+            <web-uri>apapca.war</web-uri>
+            <context-root>sales/activate/v1_0/activateProductArrangementPCA</context-root>
+        </web>
+    </module>
+</application>

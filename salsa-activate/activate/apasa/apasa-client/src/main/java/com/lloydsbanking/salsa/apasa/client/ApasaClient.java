@@ -1,0 +1,12 @@
+package com.lloydsbanking.salsa.apasa.client;
+
+import lib_sim_salesprocessmanagement.ia_activateproductarrangement.*;
+import lib_sim_salesprocessmanagement.messages.ActivateProductArrangementRequest;
+import lib_sim_salesprocessmanagement.messages.ActivateProductArrangementResponse;
+
+public interface ApasaClient {
+
+    ActivateProductArrangementResponse activateProductArrangement(ActivateProductArrangementRequest activateProductArrangementRequest) throws ActivateProductArrangementExternalSystemErrorMsg, ActivateProductArrangementExternalBusinessErrorMsg, ActivateProductArrangementInternalSystemErrorMsg, ActivateProductArrangementResourceNotAvailableErrorMsg, ActivateProductArrangementDataNotAvailableErrorMsg;
+
+    public void setSoapMessagesLogFilename(final String soapMessagesLogFilename);
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="IA_ProcessPendingArrangementEventExport1_IA_ProcessPendingArrangementEventHttp_Service" targetNamespace="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent/Binding" xmlns:Port_0="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:this="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent/Binding" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import location="IA_ProcessPendingArrangementEvent.wsdl" namespace="http://LIB_SIM_SalesProcessManagement/IA_ProcessPendingArrangementEvent"/>
+  <wsdl:binding name="IA_ProcessPendingArrangementEventExport1_IA_ProcessPendingArrangementEventHttpBinding" type="Port_0:IA_ProcessPendingArrangementEvent">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="processPendingArrangementEvent">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="processPendingArrangementEventRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IA_ProcessPendingArrangementEventExport1_IA_ProcessPendingArrangementEventHttpService">
+    <wsdl:port binding="this:IA_ProcessPendingArrangementEventExport1_IA_ProcessPendingArrangementEventHttpBinding" name="IA_ProcessPendingArrangementEventExport1_IA_ProcessPendingArrangementEventHttpPort">
+      <soap:address location="http://localhost:9080/TSK_SalesProcessManagementWeb/sca/IA_ProcessPendingArrangementEventExport1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

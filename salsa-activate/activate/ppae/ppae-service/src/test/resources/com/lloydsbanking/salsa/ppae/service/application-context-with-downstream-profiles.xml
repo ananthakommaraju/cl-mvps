@@ -1,0 +1,121 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+    <!--
+        A Spring context configuration file which broadly configures the app as in production, but implements a number of profiles
+        allowing tests to determine the nature of downstream dependencies wired in - real, in-process mocks and remote mocks.
+    -->
+
+
+    <import resource="classpath:/com/lloydsbanking/salsa/configuration.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/ppae/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/ppae/instance-implementation.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/logging.xml"/>
+
+
+    <beans profile="remote-mock-downstream,wps-remote-mock-downstream">
+        <import resource="remote-mock-downstream-application-context.xml"/>
+
+        <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"></bean>
+        <bean id="testDataHelper" class="com.lloydsbanking.salsa.ppae.TestDataHelper"/>
+
+        <bean id="ibPamHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="true"/>
+        </bean>
+
+        <bean id="ibPamConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${ibPamData.database.driver.class}"/>
+            <property name="url" value="${ibPamData.database.connectionstring}"/>
+            <property name="username" value="${ibPamData.database.username}"/>
+            <property name="password" value="${ibPamData.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${ibPamData.database.maxwait}"/>
+        </bean>
+
+        <bean id="ibPamEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.pam.model"/>
+            <property name="jpaVendorAdapter" ref="ibPamHibernateJpaAdapter"/>
+            <property name="dataSource" ref="ibPamConnectionPool"/>
+        </bean>
+        <bean id="ibPrdConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${ibPrdData.database.driver.class}"/>
+            <property name="url" value="${ibPrdData.database.connectionstring}"/>
+            <property name="username" value="${ibPrdData.database.username}"/>
+            <property name="password" value="${ibPrdData.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${ibPrdData.database.maxwait}"/>
+        </bean>
+
+        <bean id="ibPrdEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.prd.model"/>
+            <property name="jpaVendorAdapter" ref="ibPrdHibernateJpaAdapter"/>
+            <property name="dataSource" ref="ibPrdConnectionPool"/>
+        </bean>
+        <bean id="ibPrdHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+        </bean>
+
+        <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+            <constructor-arg value="vm://localhost?brokerConfig=xbean:activemq.xml"/>
+        </bean>
+        <bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+            <property name="physicalName" value="defaultDestination"/>
+        </bean>
+        <bean id="jmsDestResolver" class="org.springframework.jms.support.destination.JndiDestinationResolver"/>
+
+        <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+            <property name="connectionFactory" ref="jmsConnectionFactory"/>
+            <property name="destinationResolver" ref="jmsDestResolver"/>
+            <property name="defaultDestination" ref="queue"/>
+        </bean>
+
+        <bean id="bapiHeaderToStHeaderConverter"
+              class="com.lloydsbanking.salsa.downstream.application.converter.BapiHeaderToStHeaderConverter"></bean>
+        <bean id="bapiHeaderToStHeaderConverterAccount"
+              class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"></bean>
+
+        <bean id="switchesConnectionPool" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${switches.database.driver.class}"/>
+            <property name="url" value="${switches.database.connectionstring}"/>
+            <property name="username" value="${switches.database.username}"/>
+            <property name="password" value="${switches.database.password}"/>
+            <property name="initialSize" value="10"/>
+            <property name="maxActive" value="20"/>
+            <property name="maxIdle" value="5"/>
+            <property name="minIdle" value="2"/>
+            <property name="maxWait" value="${switches.database.maxwait}"/>
+        </bean>
+
+        <bean id="switchesHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="generateDdl" value="true"/>
+            <property name="showSql" value="false"/>
+            <property name="databasePlatform"
+                      value="${switches.database.hibernate.dialect:org.hibernate.dialect.DB2390Dialect}"/>
+        </bean>
+
+        <bean id="tempSwitchesEntityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.switches.model"/>
+            <property name="jpaVendorAdapter" ref="switchesHibernateJpaAdapter"/>
+            <property name="dataSource" ref="switchesConnectionPool"/>
+        </bean>
+
+    </beans>
+
+    <beans profile="remote-mock-downstream">
+    </beans>
+
+
+    <beans profile="remote-mock-downstream-wps">
+    </beans>
+
+
+</beans>

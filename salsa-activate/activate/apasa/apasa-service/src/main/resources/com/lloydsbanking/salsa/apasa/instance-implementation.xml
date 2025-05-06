@@ -1,0 +1,61 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.apasa"/>
+    <context:component-scan base-package="com.lloydsbanking.salsa.activate">
+        <context:exclude-filter type="regex"
+                                expression="com.lloydsbanking.salsa.activate.downstream.EncryptDataRetriever.*"/>
+    </context:component-scan>
+
+    <import resource="classpath:/com/lloydsbanking/salsa/apasa/downstream-clients.xml"/>
+    <!--These are defined in the downstream client for PAM DB -->
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:com/lloydsbanking/salsa/downstream/pam/pam-create.xml"/>
+
+    <bean id="channelIdRetriever" class="com.lloydsbanking.salsa.activate.downstream.LookUpValueRetriever"></bean>
+    <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"></bean>
+    <bean id="bapiHeaderToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.application.converter.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderToStHeaderConverterAccount"
+          class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="appGroupRetriever" class="com.lloydsbanking.salsa.activate.downstream.AppGroupRetriever"></bean>
+    <bean id="exceptionUtilityActivate" class="com.lloydsbanking.salsa.activate.utility.ExceptionUtilityActivate"/>
+    <bean id="requestToResponseHeaderConverter"
+          class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"></bean>
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"/>
+    <bean id="activateRequestValidator" class="com.lloydsbanking.salsa.activate.utility.ActivateRequestValidator"/>
+    <bean id="retrievePamService" class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"/>
+    <bean id="retrievePendingArrangementService"
+          class="com.lloydsbanking.salsa.activate.retrieve.RetrievePendingArrangementService"/>
+    <bean id="amendRollOverAccount"
+          class="com.lloydsbanking.salsa.apasa.service.fulfil.downstream.AmendRollOverAccount">
+        <property name="cbsE502ClientMap">
+            <util:map id="cbsE502ClientMap">
+                <entry key="LTB" value-ref="e502ClientLtb"/>
+                <entry key="HLX" value-ref="e502ClientHlx"/>
+                <entry key="BOS" value-ref="e502ClientBos"/>
+                <entry key="VER" value-ref="e502ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="createStandingOrder"
+          class="com.lloydsbanking.salsa.apasa.service.fulfil.downstream.CreateStandingOrder">
+        <property name="cbsE032ClientMap">
+            <util:map id="cbsE032ClientMap">
+                <entry key="LTB" value-ref="e032ClientLtb"/>
+                <entry key="HLX" value-ref="e032ClientHlx"/>
+                <entry key="BOS" value-ref="e032ClientBos"/>
+                <entry key="VER" value-ref="e032ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="updatePamService"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamService"></bean>
+    <bean id="updatePamServiceForActivateDA"
+          class="com.lloydsbanking.salsa.downstream.pam.service.UpdatePamServiceForActivateDA"></bean>
+</beans>

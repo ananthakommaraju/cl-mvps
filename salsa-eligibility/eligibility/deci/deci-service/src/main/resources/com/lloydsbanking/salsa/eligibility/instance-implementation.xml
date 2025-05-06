@@ -1,0 +1,413 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.eligibility"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/eligibility/downstream-clients.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/eligibility/cache-context.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/downstream/pam/pam-common.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/downstream/pam/pam-retrieve.xml"/>
+    <import resource="classpath:/com/lloydsbanking/salsa/logging/application/application-logging.xml"/>
+    <bean id="requestValidator" class="com.lloydsbanking.salsa.eligibility.service.validator.RequestValidator"/>
+    <bean id="exceptionUtility" class="com.lloydsbanking.salsa.eligibility.service.utility.ExceptionUtility"/>
+    <bean id="exceptionUtilityWZ" class="com.lloydsbanking.salsa.eligibility.service.utility.wz.ExceptionUtility"/>
+    <bean id="appGroupRetriever" class="com.lloydsbanking.salsa.eligibility.service.downstream.AppGroupRetriever"/>
+    <bean id="requestToResponseHeaderConverter"
+          class="com.lloydsbanking.salsa.header.RequestToResponseHeaderConverter"></bean>
+    <bean id="headerRetriever" class="com.lloydsbanking.salsa.header.HeaderRetriever"></bean>
+
+    <bean id="eligibilityRefDataRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.EligibilityRefDataRetriever"></bean>
+    <bean id="kycStatusRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.KycStatusRetriever"></bean>
+    <bean id="accountEventRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.AccountEventRetriever"></bean>
+
+    <bean id="administerProductSelectionService"
+          class="com.lloydsbanking.salsa.downstream.prd.service.AdministerProductSelectionService"></bean>
+
+    <bean id="exceptionUtilityPrd" class="com.lloydsbanking.salsa.downstream.prd.exception.ExceptionUtility"/>
+
+    <bean id="channelToBrandMapping" class="com.lloydsbanking.salsa.brand.ChannelToBrandMapping"/>
+    <bean id="productHoldingRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.ProductHoldingRetriever"></bean>
+    <bean id="channelSpecificArrangements"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.ChannelSpecificArrangements"></bean>
+    <bean id="rBBSEligibilityAnalyser"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.RBBSEligibilityAnalyser"></bean>
+    <bean id="eligibilityAnalyser" class="com.lloydsbanking.salsa.eligibility.service.rules.EligibilityAnalyser"/>
+
+    <bean id="ruleEvaluator" class="com.lloydsbanking.salsa.eligibility.service.rules.RuleEvaluatorBZ">
+        <property name="cstRuleMap">
+            <util:map>
+                <entry key="CR001" value-ref="ageRuleCr001"/>
+                <entry key="CR002" value-ref="ageRuleCr002"/>
+                <entry key="CR003" value-ref="ageRuleCr003"/>
+                <entry key="CR019" value-ref="ageRuleCr019"/>
+                <entry key="CR022" value-ref="shadowLimitRuleCr022"/>
+                <entry key="CR023" value-ref="shadowLimitRuleCr023"/>
+                <entry key="CR026" value-ref="knowYourCustomerRule"/>
+                <entry key="CR029" value-ref="ageRuleCr029"/>
+                <entry key="CR057" value-ref="loanAppliedTimesRule"/>
+            </util:map>
+        </property>
+        <property name="agtRuleMap">
+            <util:map>
+                <entry key="CR004" value-ref="cR004relatedEventAndDormantStatusRule"/>
+                <entry key="CR005" value-ref="cR005relatedEventAndDormantStatusRule"/>
+                <entry key="CR007" value-ref="creditCardStatusRule"/>
+                <entry key="CR008" value-ref="cR008relatedEventAndDormantStatusRule"/>
+                <entry key="CR009" value-ref="cR009relatedEventAndDormantStatusRule"/>
+                <entry key="CR010" value-ref="cR010relatedEventAndDormantStatusRule"/>
+                <entry key="CR011" value-ref="productGroupRule"/>
+                <entry key="CR012" value-ref="existingPaymentProtectionCoverRule"/>
+                <entry key="CR013" value-ref="cR013OffshoreAccountsRule"/>
+                <entry key="CR024" value-ref="cR024LoanHoldingRule"/>
+                <entry key="CR025" value-ref="cR025LoanHoldingRule"/>
+                <entry key="CR027" value-ref="currentAccountRule"/>
+                <entry key="CR031" value-ref="creditCardNumberRule"/>
+            </util:map>
+        </property>
+        <property name="agaRuleMap">
+            <util:map>
+                <entry key="CR006" value-ref="cR006ExistingProductRule"/>
+                <entry key="CR015" value-ref="cR015ISAFundTransferRule"/>
+                <entry key="CR016" value-ref="cR016ISACurrentYearRule"/>
+                <entry key="CR053" value-ref="cR053AccountOpeningDateRule"/>
+                <entry key="CR054" value-ref="cR054AccountOpeningDateRule"/>
+                <entry key="CR055" value-ref="cR055AccountOpeningDateRule"/>
+                <entry key="CR059" value-ref="cR059IndicatorTypeRule"/>
+                <entry key="CR060" value-ref="activeCurrentAccountrule"/>
+                <entry key="CR061" value-ref="cR061IndicatorTypeRule"/>
+            </util:map>
+        </property>
+        <property name="asaRuleMap">
+            <util:map>
+                <entry key="CR050" value-ref="asaExpiryTypeRule"/>
+                <entry key="CR056" value-ref="asaIndicatorTypeRule"/>
+            </util:map>
+        </property>
+        <property name="avnRuleMap">
+            <util:map>
+                <entry key="CR017" value-ref="cR017MaxProductHoldingRule"/>
+                <entry key="CR020" value-ref="cR017MaxProductHoldingRule"/>
+                <entry key="CR028" value-ref="cR028FRTDMaxProductHoldingRule"/>
+            </util:map>
+        </property>
+        <property name="asbRuleMap">
+            <util:map>
+                <entry key="CR051" value-ref="cR051ValidBusinessEntityRule"/>
+                <entry key="CR052" value-ref="cR052MBCRoleRule"/>
+                <entry key="CR058" value-ref="cR058StrictFlagRule"/>
+            </util:map>
+        </property>
+
+    </bean>
+    <bean id="eligibilityAnalyserWZ" class="com.lloydsbanking.salsa.eligibility.service.rules.wz.EligibilityAnalyser"/>
+
+    <bean id="ruleEvaluatorWZ" class="com.lloydsbanking.salsa.eligibility.service.rules.wz.RuleEvaluatorWZ">
+        <property name="cstRuleMap">
+            <util:map>
+                <entry key="CR001" value-ref="ageRuleCr001"/>
+                <entry key="CR002" value-ref="ageRuleCr002"/>
+                <entry key="CR003" value-ref="ageRuleCr003"/>
+                <entry key="CR019" value-ref="ageRuleCr019"/>
+                <entry key="CR022" value-ref="shadowLimitRuleCr022WZ"/>
+                <entry key="CR023" value-ref="shadowLimitRuleCr023WZ"/>
+                <entry key="CR026" value-ref="knowYourCustomerRuleCr026WZ"/>
+                <entry key="CR029" value-ref="ageRuleCr029"/>
+                <entry key="CR039" value-ref="nationalityOfCustomerRuleCr039WZ"/>
+                <entry key="CR046" value-ref="cbsEventRuleCr046WZ"/>
+                <entry key="CR047" value-ref="addressValidatorCr047WZ"/>
+                <entry key="CR049" value-ref="clubAccountHoldingRuleCr049WZ"/>
+                <entry key="CR062" value-ref="cbsDecisionCodeCr062WZ"/>
+                <entry key="CR063" value-ref="fulfilledFinanceApplicationCr063WZ"/>
+                <entry key="CR065" value-ref="addressAndIndNameValidatorCr065WZ"/>
+                <entry key="CR066" value-ref="uKResidencyCheckRuleCR066WZ"/>
+                <entry key="CR067" value-ref="shadowLimitValidatorCr067WZ"/>
+            </util:map>
+        </property>
+        <property name="agaRuleMap">
+            <util:map>
+                <entry key="CR006" value-ref="cR006ExistingProductRule"/>
+                <entry key="CR015" value-ref="cR015ISAFundTransferRuleWZ"/>
+                <entry key="CR016" value-ref="cR016ISACurrentYearRuleWZ"/>
+                <entry key="CR040" value-ref="cR040CustomerVantageProductHoldingLimitRuleWZ"/>
+                <entry key="CR041" value-ref="cR041FrozenAccountsRuleWZ"/>
+                <entry key="CR042" value-ref="cR042MaxInstanceOfProductsRuleWZ"/>
+                <entry key="CR048" value-ref="cR048CreditCardEligibilityWZ"/>
+                <entry key="CR043" value-ref="cR043MaxInstanceForGivenInstructionsRuleWZ"/>
+
+                <entry key="CR064" value-ref="cR064CreditCardStartDateRuleWZ"/>
+                <entry key="CR068" value-ref="cR068CBSIndicatorPresentOnAllAccountsRuleWZ"/>
+                <entry key="CR069" value-ref="cR069MaximumAmountLimitRuleWZ"/>
+            </util:map>
+        </property>
+        <property name="agtRuleMap">
+            <util:map>
+                <entry key="CR004" value-ref="cR004relatedEventAndDormantStatusRuleWZ"/>
+                <entry key="CR005" value-ref="cR005relatedEventAndDormantStatusRuleWZ"/>
+                <entry key="CR007" value-ref="creditCardStatusRule"/>
+                <entry key="CR008" value-ref="cR008relatedEventAndDormantStatusRule"/>
+                <entry key="CR009" value-ref="cR009relatedEventAndDormantStatusRule"/>
+                <entry key="CR010" value-ref="cR010relatedEventAndDormantStatusRule"/>
+                <entry key="CR011" value-ref="productGroupRule"/>
+                <entry key="CR012" value-ref="existingPaymentProtectionCoverRule"/>
+                <entry key="CR013" value-ref="cR013OffshoreAccountsRule"/>
+                <entry key="CR024" value-ref="cR024LoanHoldingRuleWZ"/>
+                <entry key="CR025" value-ref="cR025LoanHoldingRuleWZ"/>
+                <entry key="CR031" value-ref="creditCardNumberRuleWZ"/>
+                <entry key="CR032" value-ref="cR032ExistingProductRuleWZ"/>
+                <entry key="CR033" value-ref="cR033HasExistingProductArrangementRule"/>
+                <entry key="CR034" value-ref="cR034HasACurrentAccountRuleWZ"/>
+                <entry key="CR035" value-ref="cR035FixedISAMaxProductHoldingRule"/>
+                <entry key="CR036" value-ref="cR036CurrentAccountRuleWZ"/>
+                <entry key="CR037" value-ref="cR037relatedEventAndDormantStatusRule"/>
+                <entry key="CR038" value-ref="cR038ActiveCurrentAccountRule"/>
+                <entry key="CR044" value-ref="cR044DormantAccountRule"/>
+                <entry key="CR045" value-ref="cR045JointSignatureRule"/>
+            </util:map>
+        </property>
+        <property name="avnRuleMap">
+            <util:map>
+                <entry key="CR017" value-ref="cR017MaxProductHoldingRule"/>
+                <entry key="CR020" value-ref="cR017MaxProductHoldingRule"/>
+                <entry key="CR028" value-ref="cR028FRTDMaxProductHoldingRuleWZ"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="knowYourCustomerRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR026KnowYourCustomerRule"></bean>
+    <bean id="dateUtility" class="com.lloydsbanking.salsa.eligibility.service.utility.DateUtility"></bean>
+    <bean id="eligibilityDataHelper"
+          class="com.lloydsbanking.salsa.eligibility.service.utility.EligibilityDataHelper"></bean>
+    <bean id="loanAppliedTimesRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR057LoanAppliedTimesRule"></bean>
+    <bean id="ageRuleCr001" class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR001CustomerAgeRule"></bean>
+    <bean id="ageRuleCr002" class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR002CustomerAgeRule"></bean>
+    <bean id="ageRuleCr003" class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR003CustomerAgeRule"></bean>
+    <bean id="ageRuleCr019" class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR029CustomerAgeRule"></bean>
+    <bean id="ageRuleCr029" class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR019CustomerAgeRule"></bean>
+    <bean id="shadowLimitRuleCr022WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR022ShadowLimitRule"></bean>
+    <bean id="shadowLimitRuleCr022"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR022ShadowLimitRule"></bean>
+    <bean id="shadowLimitRuleCr023"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.CR023ShadowLimitRule"></bean>
+    <bean id="shadowLimitRuleCr023WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR023ShadowLimitRule"></bean>
+    <bean id="cbsEventRuleCr046WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR046CbsEventRule"></bean>
+    <bean id="addressValidatorCr047WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR047AddressValidatorRule"></bean>
+    <bean id="addressAndIndNameValidatorCr065WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR065AddressAndIndNameValidatorRule"></bean>
+    <bean id="clubAccountHoldingRuleCr049WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR049ClubAccountHoldingRule"></bean>
+    <bean id="shadowLimitValidatorCr067WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR067ShadowLimitCheckRule"></bean>
+    <bean id="fulfilledFinanceApplicationCr063WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR063FulfilledFinanceApplicationRule"></bean>
+    <bean id="nationalityOfCustomerRuleCr039WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR039NationalityOfCustomerRule"></bean>
+    <bean id="cbsDecisionCodeCr062WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR062CBSDecisionCodeCheckRule"></bean>
+    <bean id="uKResidencyCheckRuleCR066WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR066UKResidencyCheckRule"></bean>
+    <bean id="knowYourCustomerRuleCr026WZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.cst.wz.CR026KnowYourCustomerRule"></bean>
+    <bean id="creditCardNumberRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR031CreditCardNumberRule"></bean>
+    <bean id="cR044DormantAccountRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR044DormantAccountRule"></bean>
+    <bean id="cR045JointSignatureRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR045JointSignatureRule"></bean>
+    <bean id="cR043MaxInstanceForGivenInstructionsRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR043MaxInstanceOfProductsForGivenInstructionsRule"></bean>
+    <bean id="cR032ExistingProductRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR032ExistingProductRule"></bean>
+    <bean id="cR033HasExistingProductArrangementRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR033HasExistingProductArrangementRule"></bean>
+    <bean id="cR034HasACurrentAccountRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR034HasACurrentAccountRule"></bean>
+    <bean id="cR028FRTDMaxProductHoldingRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.avn.wz.CR028FRTDMaxProductHoldingRule"></bean>
+    <bean id="bapiHeaderToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.account.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="bapiHeaderUserToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.user.convert.BapiHeaderUserToStHeaderConverter"></bean>
+    <bean id="bapiHeaderSystemToStHeaderConverter"
+          class="com.lloydsbanking.salsa.downstream.fsystem.convert.BapiHeaderToStHeaderConverter"></bean>
+    <bean id="shadowLimitRetriever" class="com.lloydsbanking.salsa.eligibility.service.downstream.ShadowLimitRetriever">
+        <property name="cbsE220ClientMap">
+            <util:map id="cbsE220ClientMap">
+                <entry key="LTB" value-ref="e220ClientLtb"/>
+                <entry key="HAL" value-ref="e220ClientHlx"/>
+                <entry key="BOS" value-ref="e220ClientBos"/>
+                <entry key="VER" value-ref="e220ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="cbsIndicatorRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.CBSIndicatorRetriever">
+        <property name="cbsE184ClientMap">
+            <util:map id="cbsE184ClientMap">
+                <entry key="LTB" value-ref="e184ClientLtb"/>
+                <entry key="HAL" value-ref="e184ClientHlx"/>
+                <entry key="BOS" value-ref="e184ClientBos"/>
+                <entry key="VER" value-ref="e184ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="customerDecisionDetailsRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.CustomerDecisionDetailsRetriever">
+        <property name="cbsE591ClientMap">
+            <util:map id="cbsE591ClientMap">
+                <entry key="LTB" value-ref="e591ClientLtb"/>
+                <entry key="HLX" value-ref="e591ClientHlx"/>
+                <entry key="BOS" value-ref="e591ClientBos"/>
+                <entry key="VER" value-ref="e591ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="checkBalanceRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.CheckBalanceRetriever">
+        <property name="cbsE141ClientMap">
+            <util:map id="cbsE141ClientMap">
+                <entry key="LTB" value-ref="e141ClientLtb"/>
+                <entry key="HLX" value-ref="e141ClientHlx"/>
+                <entry key="BOS" value-ref="e141ClientBos"/>
+                <entry key="VER" value-ref="e141ClientVer"/>
+            </util:map>
+        </property>
+    </bean>
+    <bean id="cbsRequestFactory" class="com.lloydsbanking.salsa.eligibility.service.converter.CbsRequestFactory"/>
+    <bean id="declineReasonUtility"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.common.DeclineReasonAdder"/>
+    <bean id="cR024LoanHoldingRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR024CAAndLoanHoldingRule"></bean>
+    <bean id="cR024LoanHoldingRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR024CAAndLoanHoldingRule"></bean>
+    <bean id="cR036CurrentAccountRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR036CurrentAccountRule"></bean>
+    <bean id="cR038ActiveCurrentAccountRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR038ActiveCurrentAccountRule"></bean>
+    <bean id="cR025LoanHoldingRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR025CAAndLoanHoldingRule"></bean>
+    <bean id="cR025LoanHoldingRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR025CAAndLoanHoldingRule"></bean>
+    <bean id="cR004relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR004RelatedEventAndDormantStatusRule"/>
+    <bean id="cR004relatedEventAndDormantStatusRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR004RelatedEventAndDormantStatusRule"/>
+    <bean id="cR037relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR037RelatedEventAndDormantStatusRule"/>
+    <bean id="cR005relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR005RelatedEventAndDormantStatusRule"/>
+    <bean id="cR005relatedEventAndDormantStatusRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR005RelatedEventAndDormantStatusRule"/>
+    <bean id="cR008relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR008RelatedEventAndDormantStatusRule"/>
+    <bean id="cR009relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR009RelatedEventAndDormantStatusRule"/>
+    <bean id="cR010relatedEventAndDormantStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR010RelatedEventAndDormantStatusRule"/>
+    <bean id="creditCardStatusRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR007CreditCardStatusRule"/>
+    <bean id="currentAccountRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR027HasCurrentAccountRule"/>
+    <bean id="existingPaymentProtectionCoverRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR012ExistingPaymentProtectionCoverRule"/>
+    <bean id="creditCardNumberRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR031CreditCardNumberRule"/>
+    <bean id="checkLoanAndCurrentAccountType"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CheckLoanAndCurrentAccountType"/>
+    <bean id="cR053AccountOpeningDateRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR053AccountOpeningDateRule"/>
+    <bean id="cR054AccountOpeningDateRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR054AccountOpeningDateRule"/>
+    <bean id="cR055AccountOpeningDateRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR055AccountOpeningDateRule"/>
+    <bean id="cR058StrictFlagRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.asb.CR058StrictFlagRule"/>
+    <bean id="cR006ExistingProductRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR006ExistingProductRule"/>
+    <bean id="cR013OffshoreAccountsRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR013OffshoreAccountsRule"/>
+    <bean id="activeCurrentAccountrule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR060ActiveCurrentAccountRule"></bean>
+    <bean id="asaIndicatorTypeRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.asa.CR056IndicatorTypeRule"/>
+    <bean id="asaExpiryTypeRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.asa.CR050OverdraftExpiryRule"/>
+    <bean id="cR059IndicatorTypeRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR059IndicatorTypeRule"></bean>
+    <bean id="cR061IndicatorTypeRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR061IndicatorTypeRule"></bean>
+    <bean id="cR015ISAFundTransferRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR015ISAFundTransferRule"></bean>
+    <bean id="cR015ISAFundTransferRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR015ISAFundTransferRule"></bean>
+
+    <bean id="b093RequestFactory" class="com.lloydsbanking.salsa.eligibility.service.converter.B093RequestFactory"/>
+    <bean id="productGroupRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.CR011ProductGroupRule"></bean>
+
+    <bean id="cR016ISACurrentYearRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.CR016ISACurrentYearRule"></bean>
+    <bean id="cR016ISACurrentYearRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR016ISACurrentYearRule"></bean>
+    <bean id="cR040CustomerVantageProductHoldingLimitRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR040CustomerVantageProductHoldingLimitRule"></bean>
+    <bean id="cR041FrozenAccountsRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR041FrozenAccountsRuleWZ"></bean>
+
+    <bean id="cR048CreditCardEligibilityWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR048CreditCardEligibilityRule"></bean>
+    <bean id="cR042MaxInstanceOfProductsRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR042MaxInstanceOfProductsRule"></bean>
+    <bean id="cR064CreditCardStartDateRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR064CreditCardStartDateRule"></bean>
+    <bean id="cR068CBSIndicatorPresentOnAllAccountsRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR068CBSIndicatorPresentOnAllAccountsRule"></bean>
+    <bean id="cR069MaximumAmountLimitRuleWZ"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.aga.wz.CR069MaximumAmountLimitRule"></bean>
+    <bean id="cR052MBCRoleRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.asb.CR052MBCRoleRule"></bean>
+    <bean id="cR017MaxProductHoldingRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.avn.CR017MaxProductHoldingRule"></bean>
+
+    <bean id="cR051ValidBusinessEntityRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.asb.CR051ValidBusinessEntityRule"></bean>
+
+    <bean id="cR028FRTDMaxProductHoldingRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.avn.CR028FRTDMaxProductHoldingRule"></bean>
+    <bean id="cR035FixedISAMaxProductHoldingRule"
+          class="com.lloydsbanking.salsa.eligibility.service.rules.agt.wz.CR035FixedISAMaxProductHoldingRule"></bean>
+
+    <bean id="headerRetrieverWZ" class="com.lloydsbanking.salsa.header.gmo.HeaderRetriever"></bean>
+
+    <bean id="eligibilityLogServiceWZ"
+          class="com.lloydsbanking.salsa.eligibility.logging.wz.EligibilityLogService"></bean>
+    <bean id="requestToResponseHeaderConverterWZ"
+          class="com.lloydsbanking.salsa.header.gmo.RequestToResponseHeaderConverter"></bean>
+    <bean id="eligibilityPAMRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.EligibilityPAMRetriever"></bean>
+    <bean id="eligibilityPRDRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.EligibilityPRDRetriever"></bean>
+    <bean id="gmoToGboRequestHeaderConverter"
+          class="com.lloydsbanking.salsa.eligibility.service.utility.header.GmoToGboRequestHeaderConverter"></bean>
+    <bean id="retrievePamService" class="com.lloydsbanking.salsa.downstream.pam.service.RetrievePamService"/>
+    <bean id="dateFactory" class="com.lloydsbanking.salsa.date.DateFactory"></bean>
+    <bean id="mandateAccessDetailsRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.MandateAccessDetailsRetriever"></bean>
+
+    <bean id="refInstructionPrdRulesRetriever"
+          class="com.lloydsbanking.salsa.eligibility.service.downstream.RefInstructionPrdRulesRetriever">
+        <constructor-arg ref="ibPrdConnectionPool"/>
+    </bean>
+</beans>

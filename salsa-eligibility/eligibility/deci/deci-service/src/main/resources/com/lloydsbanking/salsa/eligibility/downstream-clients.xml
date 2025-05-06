@@ -1,0 +1,405 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- SOAP clients -->
+    <tx:annotation-driven/>
+    <bean id="f075Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f075.F075ClientImpl">
+        <constructor-arg value="${ocis.f075.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.retailparty.ocis.F075EnqKYCDetails_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f075.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+    <bean id="f336Client" class="com.lloydsbanking.salsa.downstream.ocis.client.f336.F336ClientImpl">
+        <constructor-arg value="${ocis.f336.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.customermanufacturing.ocis.F336BroProductHoldings_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${ocis.f336.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="userclient" class="com.lloydsbanking.salsa.downstream.user.client.UserClientImpl">
+        <constructor-arg value="${fs.user.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.user.User"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.user.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e220ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220ClientImpl">
+        <constructor-arg value="${cbs.e220.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E220EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e220.ltb.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e220ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220ClientImpl">
+        <constructor-arg value="${cbs.e220.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E220EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e220.ver.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e220ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220ClientImpl">
+        <constructor-arg value="${cbs.e220.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E220EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e220.bos.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e220ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220ClientImpl">
+        <constructor-arg value="${cbs.e220.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E220EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e220.hlx.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e184ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184ClientImpl">
+        <constructor-arg value="${cbs.e184.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E184EnqCBSIndicators_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e184.ltb.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e184ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184ClientImpl">
+        <constructor-arg value="${cbs.e184.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E184EnqCBSIndicators_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e184.ver.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e184ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184ClientImpl">
+        <constructor-arg value="${cbs.e184.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E184EnqCBSIndicators_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e184.bos.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e184ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184ClientImpl">
+        <constructor-arg value="${cbs.e184.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E184EnqCBSIndicators_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e184.hlx.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e591ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591ClientImpl">
+        <constructor-arg value="${cbs.e591.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E591EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e591.ltb.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e591ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591ClientImpl">
+        <constructor-arg value="${cbs.e591.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E591EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e591.ver.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e591ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591ClientImpl">
+        <constructor-arg value="${cbs.e591.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E591EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e591.bos.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e591ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591ClientImpl">
+        <constructor-arg value="${cbs.e591.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydsbanking.xml.schema.enterprise.corebanking.cbs.E591EnqCBSCustDecnTrl_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e591.hlx.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e141ClientLtb" class="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141ClientImpl">
+        <constructor-arg value="${cbs.e141.ltb.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E141EnqCBSBasicAcDetail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e141.ltb.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e141ClientVer" class="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141ClientImpl">
+        <constructor-arg value="${cbs.e141.ver.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E141EnqCBSBasicAcDetail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e141.ver.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e141ClientBos" class="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141ClientImpl">
+        <constructor-arg value="${cbs.e141.bos.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E141EnqCBSBasicAcDetail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e141.bos.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="e141ClientHlx" class="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141ClientImpl">
+        <constructor-arg value="${cbs.e141.hlx.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.schema.personal.currentacandsavings.cbs.E141EnqCBSBasicAcDetail_Service"/>
+        </constructor-arg>
+        <constructor-arg value="${cbs.e141.hlx.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="fsSystemClient" class="com.lloydsbanking.salsa.downstream.fsystem.client.FsSystemClientImpl">
+        <constructor-arg value="${fs.system.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.system.System"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.system.service.timeout:19000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean id="accountClient" class="com.lloydsbanking.salsa.downstream.account.client.AccountClientImpl">
+        <constructor-arg value="${fs.account.service.url}"/>
+        <constructor-arg>
+            <bean class="com.lloydstsb.ib.wsbridge.account.Account"/>
+        </constructor-arg>
+        <constructor-arg value="${fs.account.service.timeout:4000}"/>
+        <constructor-arg ref="cxfClientLoggingInitialiser"/>
+    </bean>
+
+    <bean class="com.lloydsbanking.salsa.aop.CallLoggingAndTimingAutoProxyCreator">
+        <constructor-arg>
+            <list>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f075Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ocis.client.f075.F075Client"
+                      c:prefix="OCIS-GetKYCStatus"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="f336Client"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ocis.client.f336.F336Client"
+                      c:prefix="OCIS-ProductHolding"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e220ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220Client"
+                      c:prefix="CBS-ShadowLimit"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e220ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220Client"
+                      c:prefix="CBS-ShadowLimit"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e220ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220Client"
+                      c:prefix="CBS-ShadowLimit"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e220ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e220.E220Client"
+                      c:prefix="CBS-ShadowLimit"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e184ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184Client"
+                      c:prefix="CBS-CBSIndicators"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e184ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184Client"
+                      c:prefix="CBS-CBSIndicators"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e184ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184Client"
+                      c:prefix="CBS-CBSIndicators"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="e184ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e184.E184Client"
+                      c:prefix="CBS-CBSIndicators"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="accountClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.account.client.AccountClient"
+                      c:prefix="FS-Account"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="systemClient"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.fsystem.client.FsSystemClient"
+                      c:prefix="FS-System"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E141ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141Client"
+                      c:prefix="CBS-CheckBalance"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E141ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141Client"
+                      c:prefix="CBS-CheckBalance"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E141ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141Client"
+                      c:prefix="CBS-CheckBalance"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E141ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e141.E141Client"
+                      c:prefix="CBS-CheckBalance"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E591ClientLtb"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591Client"
+                      c:prefix="CBS-CustomerDecisionDetails"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E591ClientBos"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591Client"
+                      c:prefix="CBS-CustomerDecisionDetails"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E591ClientVer"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591Client"
+                      c:prefix="CBS-CustomerDecisionDetails"/>
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="E591ClientHlx"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.cbs.client.e591.E591Client"
+                      c:prefix="CBS-CustomerDecisionDetails"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refLookupDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ref.jdbc.RefLookupDao"
+                      c:prefix="GRD RefLookupDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refInstructionRulesDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ref.jdbc.RefInstructionRulesDao"
+                      c:prefix="GRD RefInstructionRulesDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refInstructionLookupDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ref.jdbc.RefInstructionLookupDao"
+                      c:prefix="GRD RefInstructionLookupDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refInstructionHierarchyDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.ref.jdbc.RefInstructionHierarchyDao"
+                      c:prefix="GRD RefInstructionHierarchyDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refInstructionLookupPrdDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.prd.jdbc.RefInstructionLookupPrdDao"
+                      c:prefix="PRD RefInstructionLookupPrdDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig"
+                      c:beanName="refInstructionHierarchyPrdDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.prd.jdbc.RefInstructionHierarchyPrdDao"
+                      c:prefix="PRD RefInstructionHierarchyPrdDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refInstructionRulesPrdDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.prd.jdbc.RefInstructionRulesPrdDao"
+                      c:prefix="PRD RefInstructionRulesPrdDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="fetchChildInstructionDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.prd.jdbc.FetchChildInstructionDao"
+                      c:prefix="PRD FetchChildInstructionDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="refLookUpDao"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.pam.jdbc.ReferenceDataLookUpDao"
+                      c:prefix="PAM ReferenceDataLookUpDao"/>
+
+                <bean class="com.lloydsbanking.salsa.logging.BeanLoggingConfig" c:beanName="getBrandedSwitchValue"
+                      c:interfaceClass="com.lloydsbanking.salsa.downstream.switches.SwitchService"
+                      c:prefix="DB2 SwitchService"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="switchService" class="com.lloydsbanking.salsa.downstream.switches.SwitchServiceImpl"/>
+    <!-- IB Ref Data database setup -->
+
+    <jee:jndi-lookup id="ibConnectionPool" jndi-name="jdbc/ibRefData"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ibEntityManagerFactory"/>
+    </bean>
+
+    <bean id="ibHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+        <property name="databasePlatform"
+                  value="${ibrefdata.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+    </bean>
+
+    <bean id="ibEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.ref.model"/>
+        <property name="jpaVendorAdapter" ref="ibHibernateJpaAdapter"/>
+        <property name="dataSource" ref="ibConnectionPool"/>
+    </bean>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.ref.jdbc"
+                      entity-manager-factory-ref="ibEntityManagerFactory"/>
+
+    <!-- IB DB setup -->
+    <jee:jndi-lookup id="switchesConnectionPool" jndi-name="jdbc/switches"/>
+
+    <bean id="switchesTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="switchesEntityManagerFactory"/>
+    </bean>
+
+    <bean id="switchesHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="false"/>
+        <property name="databasePlatform"
+                  value="${switches.database.hibernate.dialect:org.hibernate.dialect.DB2Dialect}"/>
+    </bean>
+
+    <bean id="switchesEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.switches.model"/>
+        <property name="jpaVendorAdapter" ref="switchesHibernateJpaAdapter"/>
+        <property name="dataSource" ref="switchesConnectionPool"/>
+    </bean>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.switches.jdbc"
+                      entity-manager-factory-ref="switchesEntityManagerFactory"
+                      transaction-manager-ref="switchesTransactionManager"/>
+
+
+    <jee:jndi-lookup id="ibPrdConnectionPool" jndi-name="jdbc/ibPrdData"/>
+
+    <jee:jndi-lookup id="ibPamConnectionPool" jndi-name="jdbc/ibPamData"/>
+
+
+    <bean id="prdTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ibPrdEntityManagerFactory"/>
+    </bean>
+
+    <bean id="pamTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ibPamEntityManagerFactory"/>
+    </bean>
+
+    <bean id="ibPrdHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+        <property name="databasePlatform"
+                  value="${ibPrdData.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+    </bean>
+
+    <bean id="ibPamHibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+        <property name="databasePlatform"
+                  value="${ibPamData.database.hibernate.dialect:org.hibernate.dialect.Oracle10gDialect}"/>
+    </bean>
+
+    <bean id="ibPrdEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.prd.model"/>
+        <property name="jpaVendorAdapter" ref="ibPrdHibernateJpaAdapter"/>
+        <property name="dataSource" ref="ibPrdConnectionPool"/>
+    </bean>
+
+    <bean id="ibPamEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.lloydsbanking.salsa.downstream.pam.model"/>
+        <property name="jpaVendorAdapter" ref="ibPamHibernateJpaAdapter"/>
+        <property name="dataSource" ref="ibPamConnectionPool"/>
+    </bean>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.prd.jdbc"
+                      entity-manager-factory-ref="ibPrdEntityManagerFactory"
+                      transaction-manager-ref="prdTransactionManager"/>
+
+    <jpa:repositories base-package="com.lloydsbanking.salsa.downstream.pam.jdbc"
+                      entity-manager-factory-ref="ibPamEntityManagerFactory"
+                      transaction-manager-ref="pamTransactionManager"/>
+</beans>

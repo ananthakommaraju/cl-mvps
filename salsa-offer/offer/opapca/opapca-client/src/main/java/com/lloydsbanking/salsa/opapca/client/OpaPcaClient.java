@@ -1,0 +1,12 @@
+package com.lloydsbanking.salsa.opapca.client;
+
+import lib_sim_salesprocessmanagement.ia_offerproductarrangement.*;
+import lib_sim_salesprocessmanagement.messages.OfferProductArrangementRequest;
+import lib_sim_salesprocessmanagement.messages.OfferProductArrangementResponse;
+
+public interface OpaPcaClient {
+
+    OfferProductArrangementResponse offerProductArrangement(OfferProductArrangementRequest request) throws OfferProductArrangementInternalServiceErrorMsg, OfferProductArrangementExternalBusinessErrorMsg, OfferProductArrangementDataNotAvailableErrorMsg, OfferProductArrangementResourceNotAvailableErrorMsg, OfferProductArrangementExternalServiceErrorMsg;
+
+    public void setSoapMessagesLogFilename(final String soapMessagesLogFilename);
+}

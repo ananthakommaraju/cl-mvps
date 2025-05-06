@@ -1,0 +1,37 @@
+package com.lloydsbanking.salsa.eligibility.service.utility.constants;
+
+public interface EligibilityErrorCodes {
+    String ERR_ACCOUNT_LOOKUP_ERROR = "00720001";
+
+    String ERR_INVALID_REQUEST  = "00720002";
+
+    String ERR_EXTERNAL_SYSTEM_ERROR  = "00720003";
+
+    int DB_TIMEOUT = 161031;
+
+    String F075_BUSINESS_ERROR = "813003";
+
+    String ERR_EXT_SERVICE_ERROR = "823005";
+
+    int OCIS_ERR_PARTY_NOT_MASTER = 163007;
+
+    int OCIS_ERR_PARTY_NOT_FOUND = 163008;
+
+    int OCIS_ERR_UNKNOWN_EXT_PARTY = 163009;
+
+    int OCIS_ERR_SEVERE_ERROR = 160999;
+
+    int OCIS_ERR_USERID_NOT_SUPPLIED = 163000;
+
+    int OCIS_ERR_INVALID_USERID_TYPE_CODE= 163001;
+
+    int OCIS_ERR_INVALID_CHANOUTID = 163002;
+
+    int OCIS_ERR_INVALID_CHANOUT_TYPECODE=163003;
+
+    int OCIS_ERR_EXTSYSID_NOT_ON_OCIS = 163004;
+
+    int OCIS_ERR_PARTY_ID_NOT_SUPPLIED = 163006;
+
+}
+

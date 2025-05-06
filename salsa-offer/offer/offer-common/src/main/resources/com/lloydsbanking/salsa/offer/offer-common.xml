@@ -1,0 +1,107 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <context:component-scan base-package="com.lloydsbanking.salsa.offer"/>
+
+    <bean id="fraudDecisionRetriever" class="com.lloydsbanking.salsa.offer.apply.downstream.FraudDecisionRetriever"/>
+    <bean id="applicationStatusEvaluator"
+          class="com.lloydsbanking.salsa.offer.apply.evaluate.ApplicationStatusEvaluator"/>
+    <bean id="retrieveFraudDecisionRequestFactory"
+          class="com.lloydsbanking.salsa.offer.apply.convert.RetrieveFraudDecisionRequestFactory"/>
+    <bean id="exceptionUtilityOffer" class="com.lloydsbanking.salsa.offer.exception.ExceptionUtility"/>
+    <bean id="f205RequestFactory"
+          class="com.lloydsbanking.salsa.offer.apply.convert.RetrieveCreditScoreRequestFactory"/>
+    <bean id="creditScoreRetriever" class="com.lloydsbanking.salsa.offer.apply.downstream.CreditScoreRetriever"/>
+    <bean id="productConditionsRetriever" class="com.lloydsbanking.salsa.offer.apply.downstream.ProductConditionsRetriever"/>
+
+    <bean id="asmResponseToCustomerScoreConverter"
+          class="com.lloydsbanking.salsa.offer.apply.evaluate.AsmResponseToCustomerScoreConverter"/>
+    <bean id="highestPriorityReferralCodeEvaluator"
+          class="com.lloydsbanking.salsa.offer.apply.evaluate.HighestPriorityReferralCodeEvaluator"/>
+
+    <bean id="rpcRetriever" class="com.lloydsbanking.salsa.offer.apply.downstream.RpcRetriever"/>
+    <bean id="offerToRpcRequestConverter"
+          class="com.lloydsbanking.salsa.offer.apply.convert.OfferToRpcRequestConverter"/>
+    <bean id="asmResponseToProductFamilyConverter"
+          class="com.lloydsbanking.salsa.offer.apply.convert.AsmResponseToProductFamilyConverter"/>
+    <bean id="offeredProductsSorter" class="com.lloydsbanking.salsa.offer.apply.utility.OfferedProductsSorter"/>
+    <bean id="evaluatePersonalUpdData"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.evaluate.EvaluatePersonalUpdData"/>
+    <bean id="partyNonCoreUpdDataFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.PartyNonCoreUpdDataFactory"/>
+    <bean id="employerAddressDataFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.EmployerAddressDataFactory"/>
+    <bean id="evaluateStrength" class="com.lloydsbanking.salsa.offer.createinvolvedparty.evaluate.EvaluateStrength"/>
+    <bean id="ocisDetailsUpdater"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.downstream.CreateOcisCustomer"/>
+    <bean id="createInvolvedPartyService"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.CreateInvolvedPartyService"/>
+    <bean id="auditFactory" class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.AuditDataFactory"/>
+    <bean id="errorMapOcis" class="com.lloydsbanking.salsa.offer.createinvolvedparty.errorcode.RetrieveOcisErrorMap"/>
+    <bean id="phoneUpdDataFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.PhoneUpdDataFactory"/>
+    <bean id="evaluateAddressUpdData"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.evaluate.EvaluateAddressUpdData"/>
+    <bean id="unstructuredAddressFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.UnstructuredAddressFactory"/>
+    <bean id="structuredAddressFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.StructuredAddressFactory"/>
+
+    <bean id="updateOcisDetailsRequestFactory"
+          class="com.lloydsbanking.salsa.offer.createinvolvedparty.convert.CreateOcisCustomerRequestFactory"/>
+
+    <bean id="errorMap" class="com.lloydsbanking.salsa.offer.apply.errorcode.RetrieveCreditScoreErrorMap"/>
+
+
+    <bean id="productOptionsEvaluator" class="com.lloydsbanking.salsa.offer.apply.evaluate.ProductOptionsEvaluator"/>
+    <bean id="ruleConditionsEvaluator" class="com.lloydsbanking.salsa.offer.apply.evaluate.RuleConditionsEvaluator"/>
+    <bean id="asmResponseToProductOptionsConverter"
+          class="com.lloydsbanking.salsa.offer.apply.convert.AsmResponseToProductOptionsConverter"/>
+
+
+    <bean id="customerUtility" class="com.lloydsbanking.salsa.offer.identify.utility.CustomerUtility"/>
+    <bean id="legalEntityMapUtility" class="com.lloydsbanking.salsa.offer.LegalEntityMapUtility"/>
+
+    <bean id="postalAddressUtility" class="com.lloydsbanking.salsa.offer.identify.convert.PostalAddressConverter"/>
+    <bean id="involvedPartyMatchRetriever"
+          class="com.lloydsbanking.salsa.offer.identify.downstream.InvolvedPartyMatchRetriever"/>
+    <bean id="productHoldingRetriever"
+          class="com.lloydsbanking.salsa.offer.identify.downstream.ProductHoldingRetriever"/>
+    <bean id="involvedPartyRetriever" class="com.lloydsbanking.salsa.offer.identify.downstream.InvolvedPartyRetriever"/>
+    <bean id="auditDataFactory" class="com.lloydsbanking.salsa.offer.identify.convert.AuditDataFactory"/>
+    <bean id="kycStatusUtility" class="com.lloydsbanking.salsa.offer.identify.evaluate.KYCStatusEvaluator"/>
+    <bean id="offerLookupDataRetriever" class="com.lloydsbanking.salsa.offer.pam.LookupDataRetriever"/>
+    <bean id="f447RequestFactory" class="com.lloydsbanking.salsa.offer.identify.convert.EnquirePartyIdRequestFactory"/>
+    <bean id="involvedPartyDetailsResponseConverter"
+          class="com.lloydsbanking.salsa.offer.identify.convert.F061ToInvolvedPartyDetailsResponseConverter"/>
+    <bean id="deliveryPointSuffixAnalyser"
+          class="com.lloydsbanking.salsa.offer.identify.utility.DeliveryPointSuffixAnalyser"/>
+
+    <bean id="productPartyDataToProductConverter"
+          class="com.lloydsbanking.salsa.offer.identify.convert.ProductPartyDataToProductConverter"/>
+
+    <bean id="retrieveEIDVScoreRequestFactory"
+          class="com.lloydsbanking.salsa.offer.verify.convert.RetrieveEIDVScoreRequestFactory"/>
+
+    <bean id="customerScoreEvaluator"
+          class="com.lloydsbanking.salsa.offer.verify.evaluate.EidvStatusEvaluator"/>
+
+    <bean id="eidvRetriever"
+          class="com.lloydsbanking.salsa.offer.verify.downstream.EidvRetriever">
+        <property name="x711ClientMap">
+            <util:map id="x711ClientMap">
+                <entry key="LTB" value-ref="x711ClientLtb"/>
+                <entry key="HLX" value-ref="x711ClientHlx"/>
+                <entry key="BOS" value-ref="x711ClientBos"/>
+                <entry key="VER" value-ref="x711ClientVer"/>
+            </util:map>
+        </property>
+
+    </bean>
+    <bean id="offerToEligibilityRequestConverter"
+          class="com.lloydsbanking.salsa.offer.eligibility.convert.OfferToEligibilityRequestConverter"/>
+</beans>
