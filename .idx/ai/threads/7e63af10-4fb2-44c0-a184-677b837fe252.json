@@ -1,0 +1,375 @@
+{
+  "uuid": "7e63af10-4fb2-44c0-a184-677b837fe252",
+  "title": "Code folder creation instruction\n",
+  "agentId": "superchat",
+  "lastEditTimestamp": 1745834192391,
+  "status": "ready",
+  "state": {},
+  "history": [
+    {
+      "type": "message",
+      "speaker": {
+        "type": "user",
+        "shortName": "Anantha",
+        "displayName": "Anantha Kommaraju",
+        "icon": "https://lh3.googleusercontent.com/a/ACg8ocLpN-n6QWMxBVLjBG8l_4GKNbCZ7M-aIu4MF8j-E7_YedkTiA=mo"
+      },
+      "agentData": {},
+      "body": [
+        {
+          "type": "markdown",
+          "markdown": "Please move all the code generated to generative-appraisal. create generative-appraisal folder first"
+        }
+      ],
+      "attachments": [],
+      "uuid": "0601902f-bfc2-41d6-8732-b517d62b12bd"
+    },
+    {
+      "type": "message",
+      "speaker": {
+        "type": "agent",
+        "agentId": "superchat",
+        "displayName": "Gemini",
+        "handle": "",
+        "icon": ":gemini"
+      },
+      "body": [
+        {
+          "type": "tool",
+          "toolId": "std:os:RunTerminalCommand",
+          "toolData": {},
+          "input": {
+            "command": "mkdir generative-appraisal"
+          },
+          "state": "accepted",
+          "ui": {
+            "type": "fragment",
+            "children": [
+              {
+                "type": "fragment",
+                "children": [
+                  {
+                    "type": "fragment",
+                    "children": [
+                      {
+                        "type": "fragment",
+                        "children": [
+                          {
+                            "type": "vStack",
+                            "children": [
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "codeSnippet",
+                                    "code": "mkdir generative-appraisal",
+                                    "terminal": true,
+                                    "lang": "bash",
+                                    "startCollapsed": false,
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "stepProgressLabel",
+                                    "status": "done",
+                                    "label": "Command succeeded",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "result": ""
+        },
+        {
+          "type": "tool",
+          "toolId": "std:os:RunTerminalCommand",
+          "toolData": {},
+          "input": {
+            "command": "mv src/main/java/com/example/appraisal generative-appraisal/"
+          },
+          "state": "accepted",
+          "ui": {
+            "type": "fragment",
+            "children": [
+              {
+                "type": "fragment",
+                "children": [
+                  {
+                    "type": "fragment",
+                    "children": [
+                      {
+                        "type": "fragment",
+                        "children": [
+                          {
+                            "type": "vStack",
+                            "children": [
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "codeSnippet",
+                                    "code": "mv src/main/java/com/example/appraisal generative-appraisal/",
+                                    "terminal": true,
+                                    "lang": "bash",
+                                    "startCollapsed": false,
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "stepProgressLabel",
+                                    "status": "done",
+                                    "label": "Command succeeded",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "result": ""
+        },
+        {
+          "type": "tool",
+          "toolId": "std:os:RunTerminalCommand",
+          "toolData": {},
+          "input": {
+            "command": "mv src/main/resources/application.properties generative-appraisal/"
+          },
+          "state": "accepted",
+          "ui": {
+            "type": "fragment",
+            "children": [
+              {
+                "type": "fragment",
+                "children": [
+                  {
+                    "type": "fragment",
+                    "children": [
+                      {
+                        "type": "fragment",
+                        "children": [
+                          {
+                            "type": "vStack",
+                            "children": [
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "codeSnippet",
+                                    "code": "mv src/main/resources/application.properties generative-appraisal/",
+                                    "terminal": true,
+                                    "lang": "bash",
+                                    "startCollapsed": false,
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fragment",
+                                "children": [
+                                  {
+                                    "type": "stepProgressLabel",
+                                    "status": "done",
+                                    "label": "Command succeeded",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "result": ""
+        },
+        {
+          "type": "markdown",
+          "markdown": "I have created the `generative-appraisal` folder and moved the `src/main/java/com/example/appraisal` and `src/main/resources/application.properties` directories into it. These actions effectively moved all the code and the application properties to the new location.\n"
+        }
+      ],
+      "agentData": {
+        "internalMessages": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Please list project files."
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "functionCall": {
+                  "name": "list_project_files",
+                  "args": {
+                    "path": "."
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "parts": [
+              {
+                "functionResponse": {
+                  "name": "list_project_files",
+                  "response": {
+                    "status": "succeeded",
+                    "result": "[\"pom.xml\",\".idx/dev.nix\",\".vscode/settings.json\",\"src/main/resources/application.properties\",\"src/main/java/com/example/appraisal/AppraisalApplication.java\",\"src/main/java/com/example/appraisal/controller/AccomplishmentController.java\",\"src/main/java/com/example/appraisal/controller/AppraisalController.java\",\"src/main/java/com/example/appraisal/controller/EmployeeController.java\",\"src/main/java/com/example/appraisal/controller/GoalController.java\",\"src/main/java/com/example/appraisal/controller/ObjectiveController.java\",\"src/main/java/com/example/appraisal/controller/SummaryReportController.java\",\"src/main/java/com/example/appraisal/domain/Accomplishment.java\",\"src/main/java/com/example/appraisal/domain/Appraisal.java\",\"src/main/java/com/example/appraisal/domain/Employee.java\",\"src/main/java/com/example/appraisal/domain/Goal.java\",\"src/main/java/com/example/appraisal/domain/Objective.java\",\"src/main/java/com/example/appraisal/domain/SummaryReport.java\",\"src/main/java/com/example/appraisal/repository/AccomplishmentRepository.java\",\"src/main/java/com/example/appraisal/repository/AppraisalRepository.java\",\"src/main/java/com/example/appraisal/repository/EmployeeRepository.java\",\"src/main/java/com/example/appraisal/repository/GoalRepository.java\",\"src/main/java/com/example/appraisal/repository/ObjectiveRepository.java\",\"src/main/java/com/example/appraisal/repository/SummaryReportRepository.java\",\"src/main/java/com/example/appraisal/service/AccomplishmentService.java\",\"src/main/java/com/example/appraisal/service/AppraisalService.java\",\"src/main/java/com/example/appraisal/service/EmployeeService.java\",\"src/main/java/com/example/appraisal/service/GoalService.java\",\"src/main/java/com/example/appraisal/service/ObjectiveService.java\",\"src/main/java/com/example/appraisal/service/SummaryReportService.java\"]"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "text": "The project files are: pom.xml, .idx/dev.nix, .vscode/settings.json, src/main/resources/application.properties, src/main/java/com/example/appraisal/AppraisalApplication.java, src/main/java/com/example/appraisal/controller/AccomplishmentController.java, src/main/java/com/example/appraisal/controller/AppraisalController.java, src/main/java/com/example/appraisal/controller/EmployeeController.java, src/main/java/com/example/appraisal/controller/GoalController.java, src/main/java/com/example/appraisal/controller/ObjectiveController.java, src/main/java/com/example/appraisal/controller/SummaryReportController.java, src/main/java/com/example/appraisal/domain/Accomplishment.java, src/main/java/com/example/appraisal/domain/Appraisal.java, src/main/java/com/example/appraisal/domain/Employee.java, src/main/java/com/example/appraisal/domain/Goal.java, src/main/java/com/example/appraisal/domain/Objective.java, src/main/java/com/example/appraisal/domain/SummaryReport.java, src/main/java/com/example/appraisal/repository/AccomplishmentRepository.java, src/main/java/com/example/appraisal/repository/AppraisalRepository.java, src/main/java/com/example/appraisal/repository/EmployeeRepository.java, src/main/java/com/example/appraisal/repository/GoalRepository.java, src/main/java/com/example/appraisal/repository/ObjectiveRepository.java, src/main/java/com/example/appraisal/repository/SummaryReportRepository.java, src/main/java/com/example/appraisal/service/AccomplishmentService.java, src/main/java/com/example/appraisal/service/AppraisalService.java, src/main/java/com/example/appraisal/service/EmployeeService.java, src/main/java/com/example/appraisal/service/GoalService.java, src/main/java/com/example/appraisal/service/ObjectiveService.java, src/main/java/com/example/appraisal/service/SummaryReportService.java"
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Please move all the code generated to generative-appraisal. create generative-appraisal folder first"
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "functionCall": {
+                  "name": "run_terminal_command",
+                  "args": {
+                    "command": "mkdir generative-appraisal"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "parts": [
+              {
+                "functionResponse": {
+                  "name": "run_terminal_command",
+                  "response": {
+                    "status": "succeeded",
+                    "result": ""
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "functionCall": {
+                  "name": "run_terminal_command",
+                  "args": {
+                    "command": "mv src/main/java/com/example/appraisal generative-appraisal/"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "parts": [
+              {
+                "functionResponse": {
+                  "name": "run_terminal_command",
+                  "response": {
+                    "status": "succeeded",
+                    "result": ""
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "functionCall": {
+                  "name": "run_terminal_command",
+                  "args": {
+                    "command": "mv src/main/resources/application.properties generative-appraisal/"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "parts": [
+              {
+                "functionResponse": {
+                  "name": "run_terminal_command",
+                  "response": {
+                    "status": "succeeded",
+                    "result": ""
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "text": "I have created the `generative-appraisal` folder and moved the `src/main/java/com/example/appraisal` and `src"
+              }
+            ]
+          },
+          {
+            "role": "model",
+            "parts": [
+              {
+                "text": "/main/resources/application.properties` directories into it. These actions effectively moved all the code and the application properties to the new location.\n"
+              }
+            ]
+          }
+        ]
+      },
+      "uuid": "750d6816-a6af-42c8-9592-ac57d788cf87"
+    }
+  ],
+  "suggestedPrompts": []
+}
