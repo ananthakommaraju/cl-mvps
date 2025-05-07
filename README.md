@@ -44,9 +44,9 @@ The purpose of this repository is to facilitate the development and demonstratio
    * Follow the bellowing convention for naming the MVP:
       * `<MVP-FUNCTIONALITY>-<TECHNOLOGY>`
    * Examples:
-      * `document-summary-cloud-function`
-      * `appraisal-gemini`
-      * `loan-application-automation`
+      * `salsa`
+      * `generative-appraisal`
+      * `document-search`
 
 ## Current MVPs
 
