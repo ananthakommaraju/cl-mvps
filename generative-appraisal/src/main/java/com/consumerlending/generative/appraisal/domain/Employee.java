@@ -21,4 +21,11 @@ public class Employee {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Objective> objectives;
 }

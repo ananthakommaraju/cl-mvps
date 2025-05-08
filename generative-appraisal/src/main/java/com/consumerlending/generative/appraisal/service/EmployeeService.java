@@ -6,30 +6,27 @@ import com.consumerlending.generative.appraisal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 
 @Service
-public class EmployeeService {    
-    private final EmployeeRepository employeeRepository;
+public class EmployeeService {
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    private EmployeeRepository employeeRepository;
 
-        this.employeeRepository = employeeRepository;
+    public Optional<Employee> getEmployeeById(Long id) {
+        return employeeRepository.findById(id);
     }
-
-    public List<Employee> findAll() {
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
-
-    public Optional<Employee> findByName(String name) {
-        List<Employee> employees = employeeRepository.findByName(name);
-        if (!employees.isEmpty()) {
-            return Optional.of(employees.get(0));
-        } else {
-            return Optional.empty();
-        }
+     public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
+     public void deleteEmployee(Long id) {
+         employeeRepository.deleteById(id);
+    }
+    
 }

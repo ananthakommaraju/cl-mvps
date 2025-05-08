@@ -64,6 +64,8 @@
         <configuration>
           <functionTarget>com.consumerlending.generative.appraisal.function.DocumentSummaryFunction</functionTarget>
           <name>AppraisalSummaryFunction</name>
+          <region>europe-west2</region>
+          <runtime>java17</runtime>
         </configuration>
       </plugin>
     </plugins>

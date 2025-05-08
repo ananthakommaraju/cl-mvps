@@ -1,36 +1,31 @@
 package com.consumerlending.generative.appraisal.service;
 
-import com.consumerlending.generative.appraisal.domain.Goal;
+import com.consumerlending.generative.appraisal.domain.Employee;
 import com.consumerlending.generative.appraisal.domain.Objective;
+import com.consumerlending.generative.appraisal.domain.Team;
 import com.consumerlending.generative.appraisal.repository.ObjectiveRepository;
-import com.consumerlending.generative.appraisal.repository.GoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ObjectiveService {
 
+    @Autowired
     private ObjectiveRepository objectiveRepository;
 
-    private GoalRepository goalRepository;
-
-    @Autowired
-    public ObjectiveService(ObjectiveRepository objectiveRepository, GoalRepository goalRepository) {
-        this.objectiveRepository = objectiveRepository;
-        this.goalRepository = goalRepository;
+    public Optional<Objective> getObjectiveById(Long id) {
+        return objectiveRepository.findById(id);
     }
 
-    public List<Objective> findAll() {
-        return objectiveRepository.findAll();
+    public List<Objective> getObjectivesByEmployee(Employee employee) {
+        return objectiveRepository.findByEmployee(employee);
     }
-    public List<Objective> findByGoal(Long goalId) {
-        Goal goal = goalRepository.findById(goalId).orElse(null);
-        if (goal == null)
-            return null;
-         return objectiveRepository.findByGoal(goal);
-    }
-    public Objective createObjective(Objective objective) {
+
+    public Objective addObjectiveToEmployee(Employee employee, Objective objective) {
+        objective.setEmployee(employee);
         return objectiveRepository.save(objective);
     }
 
@@ -38,7 +33,13 @@ public class ObjectiveService {
         return objectiveRepository.save(objective);
     }
 
+    public List<Objective> getObjectivesByTeam(Team team) {
+        List<Employee> employees = team.getEmployees();
+        return objectiveRepository.findByEmployeeIn(employees);
+    }
+
     public void deleteObjective(Long id) {
         objectiveRepository.deleteById(id);
     }
+
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,6 +24,10 @@ public class Objective {
     private String summary;
 
     private Date dateUpdated;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "goal_id")
