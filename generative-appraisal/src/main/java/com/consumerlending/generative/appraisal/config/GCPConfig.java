@@ -3,6 +3,8 @@ package com.consumerlending.generative.appraisal.config;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ImpersonatedCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.cloud.storage.*;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,11 +33,19 @@ public class GCPConfig {
     @Value("${gcp.service.account}")
     private String gcpServiceAccount;
 
+    @Value("${gcp.service.account.impersonated}")
+    private String saEmail;
+
     @Value("${gcp.cloud.storage.root.bucket}")
     private String gcpBucket;
 
     @Value("${gcp.topic.name}")
     private String gcpTopic;
+
+    @Bean
+    public Credentials getCredentials() throws IOException {
+        return impersonateServiceAccount();
+    }
 
     @Bean
     public Storage storage() throws IOException {
@@ -65,6 +76,21 @@ public class GCPConfig {
         TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
         createPubSubTopic(topicAdminClient);
         return topicAdminClient;
+    }
+
+    private Credentials impersonateServiceAccount() throws IOException {
+        GoogleCredentials credentials = ServiceAccountCredentials.newBuilder().setClientEmail(saEmail).build();
+
+        credentials.createScoped(Collections.singletonList("https://www.googleapis.com/auth/cloud-platform"));
+
+        ImpersonatedCredentials impersonatedCredentials =
+                ImpersonatedCredentials.newBuilder().setSourceCredentials(credentials)
+                        .setTargetPrincipal(gcpServiceAccount)
+                        .setScopes(Collections.singletonList("https://www.googleapis.com/auth/cloud-platform"))
+                        .setLifetime(3600)
+                        .build();
+
+        return FixedCredentialsProvider.create(impersonatedCredentials).getCredentials();
     }
 
     private void createBuckets(Storage storage) {

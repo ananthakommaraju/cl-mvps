@@ -1,0 +1,3 @@
+2025-05-08 17:05:21.524502+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TEAM" not found (this database is empty); SQL statement:
+INSERT INTO team (id, team_name, description) VALUES (1, 'Engineering Team', 'Team of engineers'), (2, 'Sales Team', 'Team of Sales') [42104-224]

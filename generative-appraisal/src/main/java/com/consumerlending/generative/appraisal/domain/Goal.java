@@ -22,6 +22,10 @@ public class Goal {
     private String summary;
 
     @ManyToOne
+    @JoinColumn(name = "appraisal_id")
+    private Appraisal appraisal;
+
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
