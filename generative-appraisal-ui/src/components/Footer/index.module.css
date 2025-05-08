@@ -1,0 +1,32 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    padding: 16px;
+    background-color: #006a4d;
+    /* Change footer background color */
+    width: 100%;
+    color: white;
+    text-align: center;
+    margin-top: auto;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    height: var(--footer-height);
+    box-sizing: border-box;
+}
+
+.footer>p {
+    text-wrap: wrap;
+    max-width: calc(100% - 32px);
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}

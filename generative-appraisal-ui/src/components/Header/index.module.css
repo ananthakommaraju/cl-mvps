@@ -1,0 +1,6 @@
+.logo {
+    width: 100px; /* Adjust width as per new logo dimensions */
+    margin-right: 16px;
+    filter: brightness(0) invert(1); /* Change logo color to white */
+    vertical-align: middle; /* Center vertically */
+}

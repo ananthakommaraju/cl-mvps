@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="apasa-jaxrpc-api" />
+        <module name="opacc-schema" />
+        <module name="apacc-jaxws-api" />
+        <module name="opacc-client" />
+        <module name="opapca-jaxws-api" />
+        <module name="apacc-schema" />
+        <module name="apacc-client" />
+        <module name="apapca-fulfil-service" />
+        <module name="opapca-schema" />
+        <module name="opasaving-jaxws-api" />
+        <module name="apasa-client" />
+        <module name="apaloans-schema" />
+        <module name="opasaving-client" />
+        <module name="apapca-schema" />
+        <module name="apasa-jaxws-api" />
+        <module name="opaloans-jaxws-api" />
+        <module name="opasaving-schema" />
+        <module name="opaloans-schema" />
+        <module name="ppae-schema" />
+        <module name="apaloans-jaxws-api" />
+        <module name="aps-schema" />
+        <module name="opaloans-client" />
+        <module name="aps-jaxws-api" />
+        <module name="opasaving-jaxrpc-api" />
+        <module name="opacc-jaxrpc-api" />
+        <module name="apasa-schema" />
+        <module name="apacc-fulfil-service" />
+        <module name="apapca-jaxrpc-api" />
+        <module name="ppae-jaxws-api" />
+        <module name="opaloans-jaxrpc-api" />
+        <module name="apaloans-client" />
+        <module name="apaloans-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

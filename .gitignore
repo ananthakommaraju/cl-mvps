@@ -1,3 +1,5 @@
 .vscode/settings.json
 generative-appraisal-ui/node_modules
 generative-appraisal/target
+generative-appraisal/.idea
+generative-appraisal-ui/.idea

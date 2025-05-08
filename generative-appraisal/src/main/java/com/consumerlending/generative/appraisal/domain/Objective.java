@@ -21,6 +21,8 @@ public class Objective {
 
     private String summary;
 
+    private Date dateUpdated;
+
     @ManyToOne
     @JoinColumn(name = "goal_id")
     private Goal goal;
