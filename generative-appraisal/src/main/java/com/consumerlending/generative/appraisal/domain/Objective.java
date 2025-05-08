@@ -28,4 +28,7 @@ public class Objective {
     @OneToMany(mappedBy = "objective", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Accomplishment> accomplishments;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "objective_id")
+    private List<KPI> kpis;
 }
