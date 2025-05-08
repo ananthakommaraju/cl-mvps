@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface ObjectiveRepository extends JpaRepository<Objective, Long> {
     List<Objective> findByEmployee(Employee employee);
     List<Objective> findByEmployeeIn(List<Employee> employees);
